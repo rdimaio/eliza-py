@@ -20,32 +20,44 @@ def load_script(script_path):
 
     return script
 
-
-
-#def load_ranks(script):
-#    """Load ranks from script. """
-#    ranks = {}
-#    for d in script:
-#        ranks[d['keyword']] = d['rank']
-#    return ranks
-
 def rank(in_str, script):
     """Rank keywords according to script.
     Returns descending sorted list of keywords."""
-    keywords = in_str.split()
 
-    ranks = []
+    # Break down input into punctuation-delineated sentences
+    sentences = re.split('\.|,|:|;|-|—', in_str)
 
-    # Populate list of ranks
-    for keyword in keywords:
-        for d in script:
-            if d['keyword'] == keyword:
-                ranks.append(d['rank'])
-                break
-        # If no rank has been specified for a word, set its rank to 0
-        else:
-            ranks.append(0)
- 
+    all_keywords = []
+    all_ranks = []
+    maximums = []
+
+    for sentence in sentences:
+
+        keywords = sentence.split()
+        all_keywords.append(keywords)
+
+        ranks = []
+
+        # Populate list of ranks
+        for keyword in keywords:
+            for d in script:
+                if d['keyword'] == keyword:
+                    ranks.append(d['rank'])
+                    break
+            # If no rank has been specified for a word, set its rank to 0
+            else:
+                ranks.append(0)
+        
+        maximums.append(max(ranks))
+        all_ranks.append(ranks)
+        
+    # Return earliest sentence with highest keyword rank
+    max_rank = max(maximums)
+    max_index = maximums.index(max_rank)
+    
+    keywords = all_keywords[max_index]
+    ranks = all_ranks[max_index]
+
     # Sort list of keywords according to list of ranks
     return [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
 
