@@ -8,7 +8,8 @@
                 "reassembly": [
                     "Can you think of anyone in particular?",
                     "Etc."
-                ]
+                ],
+                "last_used_reassembly_rule": 0
             }
         ]
     }

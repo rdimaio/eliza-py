@@ -55,35 +55,74 @@ def decompose(keyword, in_str, script):
     it returns a list of components broken down according to the decomposition rule,
     along with the reassembly rule to use.
     If a matching decomposition rule is not found,
-    it returns an empty string.
+    it returns an empty list and an empty string.
     """
 
-    for d in script: # Cycle through elements in script
-        if d['keyword'] == keyword: # If keyword matches
-            for rule in d['rules']: # Cycle through decomp rules for that keyword
-                if re.match(rule['decomp'], in_str): # If decomp rule matches
-                    reassembly_rule = rule['reassembly'][last]
+    comps = []
+    reassembly_rule = ''
+
+    # Cycle through elements in script
+    for d in script: 
+        if d['keyword'] == keyword:
+            # Cycle through decomp rules for that keyword
+            for rule in d['rules']:
+                m = re.match(rule['decomp'], in_str, re.IGNORECASE)
+                # If decomp rule matches
+                if m:
+                    # Decompose string according to decomposition rule
+                    comps = list(m.groups())
+                    # Get reassembly rule
+                    reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
+                    # Update last used reassembly rule ID
+                    next_id = rule['last_used_reassembly_rule']+1
+                    # If all reassembly rules have been used, start over
+                    if next_id >= len(rule['reassembly']):
+                        next_id = 0
+                    rule['last_used_reassembly_rule'] = next_id
                     break
             break
 
+    return comps, reassembly_rule
+
+def reassemble(components, reassembly_rule):
+    """Reassemble a list of strings given a reassembly rule.
+    Note: reassembly rules are 1-indexed, according to the original paper.
+    """
+
+    response = 'Eliza: '
+
+    # Split reassembly rule into its components
+    reassembly_rule = reassembly_rule.split() 
+
+    for comp in reassembly_rule:
+        if comp.isnumeric():
+            response += components[int(comp)] + " "
+        else:
+            response += comp + " "
+
+    # Substitute trailing space with newline
+    response = response[:-1] + "\nYou: "
+
+    return response
 
 # Load script
 script = load_script(SCRIPT_PATH)
 
-print(script)
-
 # Get first user input
-in_str = input("Welcome.\n")
+in_str = input("Eliza: Welcome.\nYou: ")
 
 while True:
     # Sort keys based on rank
     sorted_keywords = rank(in_str, script)
-    print(sorted_keywords)
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:
-        decompose(keyword, in_str)
+        comps, reassembly_rule = decompose(keyword, in_str, script)
+        # Break if matching decomposition rule has been found
+        if comps:
+            break
 
+    response = reassemble(comps, reassembly_rule)
 
     # Get next user input
     in_str = input(response)

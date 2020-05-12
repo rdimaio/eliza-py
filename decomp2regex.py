@@ -20,7 +20,7 @@ def decomp_to_regex(in_str):
         elif w.isnumeric() and int(w) > 0:
             w = '(?:\b\w+\b[\s\r\n]*){' + w + '}'
         
-        out_str = out_str + w + ' '
+        out_str += '(' + w + ') '
 
     # Remove trailing space
     out_str = out_str[:-1]
