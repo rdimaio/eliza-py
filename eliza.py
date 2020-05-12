@@ -17,7 +17,7 @@ def load_script(script_path):
     for d in script:
         for rule in d['rules']:
             rule['decomp'] = decomp_to_regex(rule['decomp']) 
-
+    print(script)
     return script
 
 def rank(in_str, script):
@@ -82,6 +82,7 @@ def decompose(keyword, in_str, script):
                 # If decomp rule matches
                 if m:
                     # Decompose string according to decomposition rule
+                    print("matched")
                     comps = list(m.groups())
                     # Get reassembly rule
                     reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
