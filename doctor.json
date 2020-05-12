@@ -1,0 +1,15 @@
+[
+    {
+        "keyword": "everybody",
+        "rank": 4,
+        "rules": [
+            {
+                "decomp": "(0 EVERYBODY 0)",
+                "reassembly": [
+                    "Can you think of anyone in particular?",
+                    "Etc."
+                ]
+            }
+        ]
+    }
+]
