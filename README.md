@@ -20,6 +20,8 @@ and the sentence with the highest ranked keyword is chosen to be decomposed.
     otherwise the program would "remember" your input (or another user's input) from past sessions,
     even though each session should only focus on the current user's present thoughts.)
 - `DLIST` in the original implementation is called `tag` in this implementation. It works the same way.
+- In the original implementation, the keyword `my` is associated with the memory stack (p. 6);
+in this implementation, the memory stack is called when no matching decomposition rule is found.
 
 ## Why JSON and not CSV?
 Each keyword has a **variable** amount of decomposition rules,

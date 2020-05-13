@@ -42,7 +42,7 @@ def rank(in_str, script):
     and the descending sorted list of keywords for that sentence."""
 
     # Break down input into punctuation-delineated sentences
-    sentences = re.split('\.|,|:|;|-|—', in_str)
+    sentences = re.split(r'\.|,|:|;|-|—', in_str)
 
     all_keywords = []
     all_ranks = []
@@ -167,19 +167,22 @@ while in_str not in exit_inputs:
         # Break if matching decomposition rule has been found
         if comps:
             # For certain keywords, store in memory stack
+            if keyword == 'your':
+                mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
+                mem_response = reassemble(mem_comps, mem_reassembly_rule)
+                memory_stack.append(mem_response)
+            response = reassemble(comps, reassembly_rule)
             break
     # If no matching decomposition rule has been found
     else:
         # If memory stack is not empty,
         # assemble an answer relevant to past input
         if memory_stack:
-            memory_stack.pop()
+            response = memory_stack.pop()
         # Otherwise, respond with a generic answer
         else:
             comps, reassembly_rule = decompose('$', '$', script)
-
-
-    response = reassemble(comps, reassembly_rule)
+            response = reassemble(comps, reassembly_rule)
 
     # Get next user input
     in_str = input(response)

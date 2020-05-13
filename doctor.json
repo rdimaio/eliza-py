@@ -310,11 +310,20 @@
         "rules": 
         [
             {
+                "decomp": "(0 YOUR 0 @FAMILY 1 YOU)",
+                "reassembly": 
+                [
+                    "Your 4 5 you?",
+                    "Your 4 ?",
+                    "What else comes to mind when you think of your 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
                 "decomp": "(0 YOUR 0 @FAMILY 0)",
                 "reassembly": 
                 [
                     "Tell me more about your family.",
-                    "Who else in your family 5 ?",
                     "Your 4 ?",
                     "What else comes to mind when you think of your 4 ?"
                 ],
@@ -332,6 +341,51 @@
                 "last_used_reassembly_rule": 0
             }
         ]
+    },
+    {
+        "keyword": "^",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0 YOUR 0 @FAMILY 1 YOU)",
+                "reassembly": 
+                [
+                    "Earlier you mentioned that your 4 5 you.",
+                    "Would you like to discuss your 4 in more detail? Earlier you mentioned that your 4 5 you.",
+                    "What else comes to mind when you think of your 4 ?",
+                    "Tell me more about your family.",
+                    "Let's discuss the fact that your 4 5 you further.",
+                    "Apart from your 4, who else is in your family?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOUR 0 @FAMILY 0)",
+                "reassembly": 
+                [
+                    "Let's discuss your 4 further.",
+                    "Earlier you mentioned your 4 .",
+                    "Tell me more about your family.",
+                    "Apart from your 4, who else in your family?",
+                    "Your 4 ?",
+                    "What else comes to mind when you think of your 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOUR 0)",
+                "reassembly": 
+                [
+                    "Let's discuss your 3 further.",
+                    "Earlier you mentioned your 3 .",
+                    "Do you have any other thoughts on your 3 ?",
+                    "What else do you think about your 3 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ],
+        "_comment": "This is a placeholder keyword to be used when a response must be generated for the memory stack."
     },
     {
         "keyword": "can",
@@ -578,6 +632,23 @@
                     "Someone special, perhaps?",
                     "You have a particular person in mind, don't you?",
                     "Who do you think you're talking about?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "hi",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(HI 0)",
+                "reassembly": 
+                [
+                    "Hi.",
+                    "Hello.",
+                    "Welcome."
                 ],
                 "last_used_reassembly_rule": 0
             }
