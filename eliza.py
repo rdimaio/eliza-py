@@ -5,24 +5,38 @@ import json
 from decomp2regex import decomp_to_regex
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
+GENERAL_SCRIPT_PATH = os.path.join(PROJECT_DIR, 'general.json')
 SCRIPT_PATH = os.path.join(PROJECT_DIR, 'doctor.json')
 
 def load_script(script_path):
     """Loads script from JSON file."""
     # Load script
-    with open(SCRIPT_PATH) as f:
+    with open(script_path) as f:
         script = json.load(f)
-    
+    return script
+
+def process_decomp_rules(script, general_script):
     # Convert decomposition rules to regex notation
     for d in script:
         for rule in d['rules']:
-            rule['decomp'] = decomp_to_regex(rule['decomp']) 
-    print(script)
+            rule['decomp'] = decomp_to_regex(rule['decomp'], general_script) 
     return script
+
+def get_exit_inputs(general_script):
+    return general_script['exit_inputs']
+
+def substitute(in_str, general_script):
+    for word in in_str.split():
+        if word in general_script['substitutions']:
+            in_str = in_str.replace(word, general_script['substitutions'][word])
+
+    return in_str
 
 def rank(in_str, script):
     """Rank keywords according to script.
-    Returns descending sorted list of keywords."""
+    Only considers sentence with highest ranked word.
+    Returns the actual sentence with hgihest ranked word,
+    and the descending sorted list of keywords for that sentence."""
 
     # Break down input into punctuation-delineated sentences
     sentences = re.split('\.|,|:|;|-|—', in_str)
@@ -59,7 +73,9 @@ def rank(in_str, script):
     ranks = all_ranks[max_index]
 
     # Sort list of keywords according to list of ranks
-    return [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
+    sorted_keywords = [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
+
+    return sentences[max_index], sorted_keywords
 
 def decompose(keyword, in_str, script):
     """Find matching decomposition rule for a given keyword.
@@ -82,7 +98,6 @@ def decompose(keyword, in_str, script):
                 # If decomp rule matches
                 if m:
                     # Decompose string according to decomposition rule
-                    print("matched")
                     comps = list(m.groups())
                     # Get reassembly rule
                     reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
@@ -108,8 +123,9 @@ def reassemble(components, reassembly_rule):
     reassembly_rule = reassembly_rule.split() 
 
     for comp in reassembly_rule:
+        # If comp is a number, then place the equivalent component
         if comp.isnumeric():
-            response += components[int(comp)] + " "
+            response += components[int(comp)-1] + " "
         else:
             response += comp + " "
 
@@ -118,19 +134,27 @@ def reassemble(components, reassembly_rule):
 
     return response
 
-# Load script
+# Load scripts
+general_script = load_script(GENERAL_SCRIPT_PATH)
+exit_inputs = get_exit_inputs(general_script)
 script = load_script(SCRIPT_PATH)
+script = process_decomp_rules(script, general_script)
 
 # Get first user input
 in_str = input("Eliza: Welcome.\nYou: ")
 
-while True:
-    # Sort keys based on rank
-    sorted_keywords = rank(in_str, script)
+while in_str not in exit_inputs:
+
+    # Substitute words if necessary
+    in_str = substitute(in_str, general_script)
+    print(in_str)
+    # Get sentence in input with highest ranked word and sort keywords by rank
+    sentence, sorted_keywords = rank(in_str, script)
+    print(sentence)
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:
-        comps, reassembly_rule = decompose(keyword, in_str, script)
+        comps, reassembly_rule = decompose(keyword, sentence, script)
         # Break if matching decomposition rule has been found
         if comps:
             break
@@ -139,3 +163,5 @@ while True:
 
     # Get next user input
     in_str = input(response)
+
+print("ELIZA: Goodbye.\n")

@@ -1,3 +1,7 @@
+# eliza.py
+
+The `doctor` script has been filled according to the appendix in the original paper (p. 9)
+
 # FAQ
 
 ## Differences from original implementation
@@ -15,6 +19,10 @@ and the sentence with the highest ranked keyword is chosen to be decomposed.
     - (note that the memory stack discussed in the paper does not persist through sessions, like the original;
     otherwise the program would "remember" your input (or another user's input) from past sessions,
     even though each session should only focus on the current user's present thoughts.)
+- Equivalent keys are not grouped within the same rules (p. 5) 
+but are expanded so that each keyword has its own set of rules. 
+This is done for clarity at the cost of negligible increased storage space of disk.
+- `DLIST` in the original implementation is called `tag` in this implementation. It works the same way.
 
 ## Why JSON and not CSV?
 Each keyword has a **variable** amount of decomposition rules,

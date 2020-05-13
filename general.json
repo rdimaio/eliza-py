@@ -1,0 +1,99 @@
+{
+    "substitutions":
+    {
+        "you": "I",
+        "i": "you",
+        "am": "are",
+        "your": "my",
+        "my": "your",
+        "were": "was",
+        "me": "you",
+        "you're": "i am",
+        "i'm": "you are",
+        "myself": "yourself",
+        "yourself": "myself",
+        "mom": "mother",
+        "dad": "father",
+        "dont": "don't",
+        "cant": "can't",
+        "cannot": "can't",
+        "wont": "won't",
+        "how": "what",
+        "when": "what",
+        "certainly": "yes",
+        "maybe": "perhaps",
+        "machine": "computer",
+        "machines": "computer",
+        "computers": "computer",
+        "recollect": "remember",
+        "recall": "remember",
+        "dreamt": "dreamed",
+        "dreams": "dream",
+        "same": "alike",
+        "identical": "alike",
+        "equivalent": "alike",
+        "apologise": "sorry",
+        "apologize": "sorry"
+    },
+
+    "tags":
+    {
+        "belief":
+        [
+            "belief",
+            "feel",
+            "think",
+            "believe"
+        ],
+        "family":
+        [
+            "family",
+            "mother",
+            "father",
+            "sister",
+            "brother",
+            "wife",
+            "husband",
+            "children",
+            "child",
+            "aunt",
+            "uncle"
+        ],
+        "desire":
+        [
+            "desire",
+            "want",
+            "need"
+        ],
+        "everyone":
+        [
+            "everyone",
+            "everybody",
+            "nobody",
+            "no one"
+        ],
+        "happy":
+        [
+            "happy",
+            "elated",
+            "glad",
+            "better"
+        ],
+        "sad":
+        [
+            "sad",
+            "unhappy",
+            "depressed",
+            "sick"
+        ]
+    },
+
+    "exit_inputs": 
+    [
+        "bye",
+        "goodbye",
+        "done",
+        "quit",
+        "exit"
+    ]
+}

@@ -2,12 +2,99 @@
     {
         "keyword": "everybody",
         "rank": 4,
-        "rules": [
+        "rules": 
+        [
             {
                 "decomp": "(0 EVERYBODY 0)",
-                "reassembly": [
+                "reassembly": 
+                [
                     "Can you think of anyone in particular?",
                     "Etc."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "sorry",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "Please don't apologize.",
+                    "Apologies are not necessary.",
+                    "What feelings do you have when you apologize?",
+                    "I've told you that apologies are not required."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "remember",
+        "rank": 5,
+        "rules": 
+        [
+            {
+                "decomp": "(0 I REMEMBER 0)",
+                "reassembly": 
+                [
+                    "Do you often think of 4 ?",
+                    "Does thinking of 4 bring anything else to mind?",
+                    "What else do you remember?",
+                    "Why do you remember 4 just now?",
+                    "What in the present situation reminds you of 4 ?",
+                    "What is the connection between me and 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 DO YOU REMEMBER 0)",
+                "reassembly":
+                [
+                    "Did you think I would forget 5 ?",
+                    "Why do you think I should recall 5 now?",
+                    "What about 5 ?",
+                    "You mentioned 5 ."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "if",
+        "rank": 3,
+        "rules": 
+        [
+            {
+                "decomp": "(0 IF 0)",
+                "reassembly": 
+                [
+                    "Do you think it's likely that 3 ?",
+                    "Do you wish that 3 ?",
+                    "What do you think about 3 ?",
+                    "Really, 2 3 ."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "dreamt",
+        "rank": 4,
+        "rules": 
+        [
+            {
+                "decomp": "(0 I DREAMT 0)",
+                "reassembly": 
+                [
+                    "Do you think it's likely that 3 ?",
+                    "Do you wish that 3 ?",
+                    "What do you think about 3 ?",
+                    "Really, 2 3 ."
                 ],
                 "last_used_reassembly_rule": 0
             }
