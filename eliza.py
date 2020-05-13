@@ -27,7 +27,6 @@ def get_exit_inputs(general_script):
 
 def substitute(in_str, general_script):
     for word in in_str.split():
-        print(word)
         if word in general_script['substitutions']:
             # Need to use regex to replace whole words only
             # Otherwise due to substitutions like I -> You, "thing" would become "thyoung"
@@ -97,15 +96,11 @@ def decompose(keyword, in_str, script):
         if d['keyword'] == keyword:
             # Cycle through decomp rules for that keyword
             for rule in d['rules']:
-                print(rule)
                 m = re.match(rule['decomp'], in_str, re.IGNORECASE)
                 # If decomp rule matches
                 if m:
-                    print(m)
                     # Decompose string according to decomposition rule
                     comps = list(m.groups())
-                    print(comps)
-                    print(rule['decomp'])
                     # Get reassembly rule
                     reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
                     # Update last used reassembly rule ID
@@ -156,10 +151,9 @@ while in_str not in exit_inputs:
 
     # Substitute words if necessary
     in_str = substitute(in_str, general_script)
-    print(in_str)
+
     # Get sentence in input with highest ranked word and sort keywords by rank
     sentence, sorted_keywords = rank(in_str, script)
-    print(sentence)
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:

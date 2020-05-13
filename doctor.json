@@ -310,12 +310,12 @@
         "rules": 
         [
             {
-                "decomp": "(0 YOUR 0 @FAMILY 1 YOU)",
+                "decomp": "(0 YOUR @FAMILY 0 YOU)",
                 "reassembly": 
                 [
-                    "Your 4 5 you?",
-                    "Your 4 ?",
-                    "What else comes to mind when you think of your 4 ?"
+                    "Your 3 4 you?",
+                    "Your 3 ?",
+                    "What else comes to mind when you think of your 3 ?"
                 ],
                 "last_used_reassembly_rule": 0
             },
@@ -348,15 +348,15 @@
         "rules": 
         [
             {
-                "decomp": "(0 YOUR 0 @FAMILY 1 YOU)",
+                "decomp": "(0 YOUR @FAMILY 0 YOU)",
                 "reassembly": 
                 [
-                    "Earlier you mentioned that your 4 5 you.",
-                    "Would you like to discuss your 4 in more detail? Earlier you mentioned that your 4 5 you.",
-                    "What else comes to mind when you think of your 4 ?",
+                    "Earlier you mentioned that your 3 4 you.",
+                    "Would you like to discuss your 3 in more detail? Earlier you mentioned that your 3 4 you.",
+                    "What else comes to mind when you think of your 3 ?",
                     "Tell me more about your family.",
-                    "Let's discuss the fact that your 4 5 you further.",
-                    "Apart from your 4, who else is in your family?"
+                    "Let's discuss the fact that your 3 4 you further.",
+                    "Apart from your 3 , who else is in your family?"
                 ],
                 "last_used_reassembly_rule": 0
             },
@@ -367,7 +367,7 @@
                     "Let's discuss your 4 further.",
                     "Earlier you mentioned your 4 .",
                     "Tell me more about your family.",
-                    "Apart from your 4, who else in your family?",
+                    "Apart from your 4 , who else in your family?",
                     "Your 4 ?",
                     "What else comes to mind when you think of your 4 ?"
                 ],
