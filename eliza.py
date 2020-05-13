@@ -99,10 +99,12 @@ def decompose(keyword, in_str, script):
                 m = re.match(rule['decomp'], in_str, re.IGNORECASE)
                 # If decomp rule matches
                 if m:
+                    print(rule['decomp'])
                     # Decompose string according to decomposition rule
                     comps = list(m.groups())
                     # Get reassembly rule
                     reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
+                    print(rule)
                     # Update last used reassembly rule ID
                     next_id = rule['last_used_reassembly_rule']+1
                     # If all reassembly rules have been used, start over
@@ -147,7 +149,7 @@ script = process_decomp_rules(script, general_script)
 # Get first user input
 in_str = input("Eliza: Welcome.\nYou: ")
 
-while in_str not in exit_inputs:
+while in_str and in_str not in exit_inputs:
 
     # Substitute words if necessary
     in_str = substitute(in_str, general_script)
