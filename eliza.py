@@ -94,11 +94,15 @@ def decompose(keyword, in_str, script):
         if d['keyword'] == keyword:
             # Cycle through decomp rules for that keyword
             for rule in d['rules']:
+                print(rule)
                 m = re.match(rule['decomp'], in_str, re.IGNORECASE)
                 # If decomp rule matches
                 if m:
+                    print(m)
                     # Decompose string according to decomposition rule
                     comps = list(m.groups())
+                    print(comps)
+                    print(rule['decomp'])
                     # Get reassembly rule
                     reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
                     # Update last used reassembly rule ID

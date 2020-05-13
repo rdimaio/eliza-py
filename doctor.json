@@ -1,15 +1,198 @@
 [
     {
-        "keyword": "everybody",
-        "rank": 4,
+        "keyword": "are",
+        "rank": 0,
         "rules": 
         [
             {
-                "decomp": "(0 EVERYBODY 0)",
+                "decomp": "(0 ARE YOU 0)",
                 "reassembly": 
                 [
-                    "Can you think of anyone in particular?",
-                    "Etc."
+                    "Do you believe you are 4 ?",
+                    "Would you want to be 4 ?",
+                    "You wish I would tell you you are 4 ?",
+                    "What would it mean if you were 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "Why do you say 'am'?",
+                    "I don't understand that."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "am",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0 ARE I 0)",
+                "reassembly": 
+                [
+                    "Why are you interested in whether I am 4 or not?",
+                    "Would you prefer if I weren't 4 ?",
+                    "Do you sometimes think I am 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 ARE 0)",
+                "reassembly": 
+                [
+                    "Did you think they might not be 3 ?",
+                    "Would you like it if they were not 3 ?",
+                    "What if they were not 3 ?",
+                    "Possibly they are 3 ."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "my",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0 MY 0)",
+                "reassembly": 
+                [
+                    "Why are you concerned over my 3 ?",
+                    "What about your own 3 ?",
+                    "Are you worried about someone else's 3 ?",
+                    "Really, my 3 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "was",
+        "rank": 2,
+        "rules": 
+        [
+            {
+                "decomp": "(0 WAS YOU 0)",
+                "reassembly": 
+                [
+                    "What if you were 4 ?",
+                    "Do you think you were 4 ?",
+                    "Were you 4 ?",
+                    "What would it mean if you were 4 ?",
+                    "What does 4 suggest to you?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU WAS 0)",
+                "reassembly": 
+                [
+                    "Were you really?",
+                    "Why do you tell me you were 4 now?",
+                    "Perhaps I already knew you were 4 ."
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 WAS I 0)",
+                "reassembly": 
+                [
+                    "Would you like to believe I was 4 ?",
+                    "What suggests that I was 4 ?",
+                    "What do you think?",
+                    "Perhaps I was 4 .",
+                    "What if I had been 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "you",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0 YOU @DESIRE 0)",
+                "reassembly": 
+                [
+                    "What would it mean to you if you had 4 ?",
+                    "Why do you want 4 ?",
+                    "Suppose you got 4 soon.",
+                    "What if you never got 4 ?",
+                    "What would getting 4 mean to you?",
+                    "What does wanting 4 have to do with this discussion?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU ARE 0 @SAD 0)",
+                "reassembly": 
+                [
+                    "I am sorry to hear that you are 5 ?",
+                    "Do you think coming here will help you not to be 5 ?",
+                    "I'm sure it's not pleasant to be 5 .",
+                    "Can you explain what made you 5 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU ARE 0 @HAPPY 0)",
+                "reassembly": 
+                [
+                    "What makes you 5 just now?",
+                    "Can you explain why you are 5 ?",
+                    "How have I helped you to be 5 ?",
+                    "Has your treatment made you 5 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU @BELIEF YOU 0)",
+                "reassembly": 
+                [
+                    "Do you really think so?",
+                    "But you are not sure you 5 ?",
+                    "Do you really doubt you 5 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU ARE 0)",
+                "reassembly": 
+                [
+                    "Is it because you are 4 that you came to me?",
+                    "How long have you been 4 ?",
+                    "Do you believe it is normal to be 4 ?",
+                    "Do you enjoy being 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU CAN'T 0)",
+                "reassembly": 
+                [
+                    "How do you know you can't?",
+                    "Have you tried?",
+                    "Perhaps you could 4 now.",
+                    "Do you really want to be able to 4 ?"
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 YOU DON'T 0)",
+                "reassembly": 
+                [
+                    "Don't you really 4 ?",
+                    "Why don't you 4 ?",
+                    "Do you believe it is normal to be 4 ?",
+                    "Do you enjoy being 4 ?"
                 ],
                 "last_used_reassembly_rule": 0
             }
@@ -39,7 +222,7 @@
         "rules": 
         [
             {
-                "decomp": "(0 I REMEMBER 0)",
+                "decomp": "(0 YOU REMEMBER 0)",
                 "reassembly": 
                 [
                     "Do you often think of 4 ?",
@@ -47,18 +230,62 @@
                     "What else do you remember?",
                     "Why do you remember 4 just now?",
                     "What in the present situation reminds you of 4 ?",
-                    "What is the connection between me and 4 ?"
+                    "What is the connection between me and 4 ?",
+                    "What else does 4 remind you of?"
                 ],
                 "last_used_reassembly_rule": 0
             },
             {
-                "decomp": "(0 DO YOU REMEMBER 0)",
+                "decomp": "(0 DO I REMEMBER 0)",
                 "reassembly":
                 [
                     "Did you think I would forget 5 ?",
                     "Why do you think I should recall 5 now?",
                     "What about 5 ?",
                     "You mentioned 5 ."
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 I REMEMBER 0)",
+                "reassembly":
+                [
+                    "How could I forget 4 ?",
+                    "What about 4 should I remember?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "forgot",
+        "rank": 5,
+        "rules": 
+        [
+            {
+                "decomp": "(0 YOU FORGOT 0)",
+                "reassembly": 
+                [
+                    "Can you think of why you might forget 4 ?",
+                    "Why can't you remember 4 ?",
+                    "How often do you think of 4 ?",
+                    "Does it bother you to forget that?",
+                    "Could it be a mental block?",
+                    "Are you generally forgetful?",
+                    "Do you think you are suppressing 4 ?"
+                    
+                ],
+                "last_used_reassembly_rule": 0
+            },
+            {
+                "decomp": "(0 DID I FORGET 0)",
+                "reassembly": 
+                [
+                    "Why do you ask?",
+                    "Are you sure you told me?",
+                    "Would it bother you if I forgot 5 ?",
+                    "Why should I recall 5 just now?",
+                    "Tell me more about 5 ."
                 ],
                 "last_used_reassembly_rule": 0
             }
@@ -76,7 +303,10 @@
                     "Do you think it's likely that 3 ?",
                     "Do you wish that 3 ?",
                     "What do you think about 3 ?",
-                    "Really, 2 3 ."
+                    "Really, 2 3 .",
+                    "What would you do if 3 ?",
+                    "But what are the chances that 3 ?",
+                    "What does this speculation lead to?"
                 ],
                 "last_used_reassembly_rule": 0
             }
@@ -91,10 +321,164 @@
                 "decomp": "(0 I DREAMT 0)",
                 "reassembly": 
                 [
-                    "Do you think it's likely that 3 ?",
-                    "Do you wish that 3 ?",
-                    "What do you think about 3 ?",
-                    "Really, 2 3 ."
+                    "Really, 4 ?",
+                    "Have you ever fantasized 4 while you were awake?",
+                    "Have you ever dreamt 4 before?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "dream",
+        "rank": 3,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "What does that dream suggest to you?",
+                    "Do you dream often?",
+                    "What persons appear in your dreams?",
+                    "Do you believe that dreams have something to do with your problem?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "perhaps",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "You don't seem quite certain.",
+                    "Why the uncertain tone?",
+                    "Can't you be more positive?",
+                    "You aren't sure?",
+                    "Don't you know?",
+                    "How likely, would you estimate?"
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "name",
+        "rank": 15,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "I am not interested in names.",
+                    "I've told you before, I don't care about names — please continue."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "deustch",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "I only speak English.",
+                    "I told you before, I don't understand German."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "francais",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "I only speak English.",
+                    "I told you before, I don't understand French."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "italiano",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "I only speak English.",
+                    "I told you before, I don't understand Italian."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "espanol",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "I only speak English.",
+                    "I told you before, I don't understand Spanish."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "hello",
+        "rank": 0,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "Hi. What seems to be your problem?",
+                    "How do you do? Please state your problem."
+                ],
+                "last_used_reassembly_rule": 0
+            }
+        ]
+    },
+    {
+        "keyword": "computer",
+        "rank": 50,
+        "rules": 
+        [
+            {
+                "decomp": "(0)",
+                "reassembly": 
+                [
+                    "Do computers worry you?",
+                    "Why do you mention computers?",
+                    "What do you think machines have to do with your problem?",
+                    "Don't you think computers can help people?",
+                    "What about machines worries you?",
+                    "What do you think about machines?",
+                    "You don't think I am a computer program, do you?"
                 ],
                 "last_used_reassembly_rule": 0
             }
