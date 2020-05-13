@@ -1,6 +1,6 @@
 # eliza.py
 
-The `doctor` script has been filled according to the appendix in the original paper (p. 9)
+The `doctor` script has been filled according to the appendix in the original paper (p. 9), including ranks.
 
 # FAQ
 
@@ -30,6 +30,7 @@ I think JSON can store this information structure in a much more intuitive way.
 - Allow the user to edit the script during a session by typing "edit"
     - (see p. 7 of the paper)
 - Could include a randomized delay for each response, so that it feels more human-like
+- Could translate to Italian
 
 # References
 J. Weizenbaum, “ELIZA—a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)

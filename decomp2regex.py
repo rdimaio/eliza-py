@@ -22,12 +22,13 @@ def decomp_to_regex(in_str, general_script):
         # A word starting with @ signifies a tag
         elif w[0] == "@":
             # Get tag name
-            tag_name = w[1:]
+            tag_name = w[1:].lower()
             w = ''
             if tag_name in general_script['tags']:
+                # Make a regex separating each option with OR operator e.g. x|y|z
                 for synonym in general_script['tags'][tag_name]:
                     w += synonym + '|'
-            # Make a regex separating each option with OR operator e.g. x|y|z
+                w = w[:-1]
         
         out_str += '(' + w + ')\s*'
 

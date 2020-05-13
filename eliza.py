@@ -27,8 +27,11 @@ def get_exit_inputs(general_script):
 
 def substitute(in_str, general_script):
     for word in in_str.split():
+        print(word)
         if word in general_script['substitutions']:
-            in_str = in_str.replace(word, general_script['substitutions'][word])
+            # Need to use regex to replace whole words only
+            # Otherwise due to substitutions like I -> You, "thing" would become "thyoung"
+            in_str = re.sub(r"\b%s\b" % word, general_script['substitutions'][word], in_str)
 
     return in_str
 
@@ -138,6 +141,8 @@ def reassemble(components, reassembly_rule):
 
     return response
 
+memory_stack = []
+
 # Load scripts
 general_script = load_script(GENERAL_SCRIPT_PATH)
 exit_inputs = get_exit_inputs(general_script)
@@ -161,7 +166,18 @@ while in_str not in exit_inputs:
         comps, reassembly_rule = decompose(keyword, sentence, script)
         # Break if matching decomposition rule has been found
         if comps:
+            # For certain keywords, store in memory stack
             break
+    # If no matching decomposition rule has been found
+    else:
+        # If memory stack is not empty,
+        # assemble an answer relevant to past input
+        if memory_stack:
+            memory_stack.pop()
+        # Otherwise, respond with a generic answer
+        else:
+            comps, reassembly_rule = decompose('$', '$', script)
+
 
     response = reassemble(comps, reassembly_rule)
 
