@@ -263,7 +263,7 @@
     },
     {
         "keyword": "i",
-        "rank": 0,
+        "rank": 2,
         "rules": 
         [
             {
@@ -282,11 +282,11 @@
                 "reassembly": 
                 [
                     "Why do you think I 3 you?",
-                    "You like to think I 3 you — don't you?",
+                    "You like to think I 3 you - don't you?",
                     "What makes you think I 3 you?",
                     "Really, I 3 you?",
                     "Do you wish to believe I 3 you?",
-                    "Suppose I did 3 you — what would that mean?",
+                    "Suppose I did 3 you - what would that mean?",
                     "Does someone else believe I 3 you?"
                 ],
                 "last_used_reassembly_rule": 0
@@ -295,9 +295,9 @@
                 "decomp": "(0 I 0)",
                 "reassembly": 
                 [
-                    "We were discussing you — not me.",
+                    "We were discussing you - not me.",
                     "Oh, I 3 ?",
-                    "You're not really talking about me — are you?",
+                    "You're not really talking about me - are you?",
                     "What are your feelings now?"
                 ],
                 "last_used_reassembly_rule": 0
@@ -801,7 +801,7 @@
                 "reassembly": 
                 [
                     "I am not interested in names.",
-                    "I've told you before, I don't care about names — please continue."
+                    "I've told you before, I don't care about names - please continue."
                 ],
                 "last_used_reassembly_rule": 0
             }
