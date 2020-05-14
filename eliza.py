@@ -1,6 +1,5 @@
 import os
 import re
-import string
 import json
 
 from decomp2regex import decomp_to_regex
@@ -28,14 +27,18 @@ def get_exit_inputs(general_script):
 
 def substitute(in_str, general_script):
     for word in in_str.split():
+        word = word.lower()
+        print(word)
         if word in general_script['substitutions']:
             # Need to use regex to replace whole words only
             # Otherwise due to substitutions like I -> You, "thing" would become "thyoung"
-            in_str = re.sub(r"\b%s\b[,.!?]*" % word, general_script['substitutions'][word], in_str)
+            in_str = re.sub(r'\b%s\b[,.!?]*' % word, general_script['substitutions'][word], in_str, flags=re.IGNORECASE)
+            print(in_str)
+            print("substi")
 
     return in_str
 
-def rank(in_str, script):
+def rank(in_str, script, general_script):
     """Rank keywords according to script.
     Only considers sentence with highest ranked word.
     Returns the actual sentence with hgihest ranked word,
@@ -50,15 +53,14 @@ def rank(in_str, script):
 
     # Iterating using index so that sentences in the list can be modified directly
     for i in range(0, len(sentences)):
-        sentences[i] = sentences[i].translate(str.maketrans('', '', string.punctuation))
-        print("iterating")
-        print(sentences[i])
+        sentences[i] = re.sub(r'[#$%&()*+,-./:;<=>?@[\]^_{|}~]', '', sentences[i])
+
+        sentences[i] = substitute(sentences[i], general_script)
 
         # Check if sentence is not empty at this point
         if sentences[i]:
-            keywords = sentences[i].split()
+            keywords = sentences[i].lower().split()
             all_keywords.append(keywords)
-            print(keywords)
             
             ranks = []
 
@@ -85,8 +87,7 @@ def rank(in_str, script):
 
     # Sort list of keywords according to list of ranks
     sorted_keywords = [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
-    
-    print(sentences[max_index], sorted_keywords)
+
 
     return sentences[max_index], sorted_keywords
 
@@ -168,14 +169,13 @@ while in_str not in exit_inputs:
         continue
 
     # Substitute words if necessary
-    in_str = substitute(in_str, general_script)
+    #in_str = substitute(in_str, general_script)
 
     # Get sentence in input with highest ranked word and sort keywords by rank
-    sentence, sorted_keywords = rank(in_str, script)
+    sentence, sorted_keywords = rank(in_str, script, general_script)
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:
-        print(sentence)
         comps, reassembly_rule = decompose(keyword, sentence, script)
         # Break if matching decomposition rule has been found
         if comps:
@@ -184,7 +184,6 @@ while in_str not in exit_inputs:
                 mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
                 mem_response = reassemble(mem_comps, mem_reassembly_rule)
                 memory_stack.append(mem_response)
-            print(comps)
             response = reassemble(comps, reassembly_rule)
             break
     # If no matching decomposition rule has been found
