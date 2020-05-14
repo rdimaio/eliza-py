@@ -152,7 +152,7 @@
                 "decomp": "(0 YOU @DESIRE 0)",
                 "reassembly": 
                 [
-                    "What would it mean to you if you had 4 ?",
+                    "What would it mean to you if you got 4 ?",
                     "Why do you want 4 ?",
                     "Suppose you got 4 soon.",
                     "What if you never got 4 ?",
@@ -270,7 +270,7 @@
                 "decomp": "(0 I AM 0)",
                 "reassembly": 
                 [
-                    "What makes you think I am 4 .",
+                    "What makes you think I am 4 ?",
                     "Does it please you to believe I am 4 ?",
                     "Do you sometimes wish you were 4 ?",
                     "Perhaps you would like to be 4 ."
@@ -313,6 +313,7 @@
                 "decomp": "(0 YOUR @FAMILY 0 YOU)",
                 "reassembly": 
                 [
+                    "Who else in your family 4 of you?",
                     "Your 3 4 you?",
                     "Your 3 ?",
                     "What else comes to mind when you think of your 3 ?"
@@ -354,6 +355,7 @@
                     "Earlier you mentioned that your 3 4 you.",
                     "Would you like to discuss your 3 in more detail? Earlier you mentioned that your 3 4 you.",
                     "What else comes to mind when you think of your 3 ?",
+                    "Does that have anything to do with the fact that your 3 4 you?",
                     "Tell me more about your family.",
                     "Let's discuss the fact that your 3 4 you further.",
                     "Apart from your 3 , who else is in your family?"

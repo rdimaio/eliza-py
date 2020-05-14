@@ -52,16 +52,12 @@ def rank(in_str, script, general_script):
     # Iterating using index so that sentences in the list can be modified directly
     for i in range(0, len(sentences)):
         sentences[i] = re.sub(r'[#$%&()*+,-./:;<=>?@[\]^_{|}~]', '', sentences[i])
-        print("iterating")
-        print(sentences[i])
-
         sentences[i] = substitute(sentences[i], general_script)
 
         # Check if sentence is not empty at this point
         if sentences[i]:
             keywords = sentences[i].lower().split()
             all_keywords.append(keywords)
-            print(keywords)
             
             ranks = []
 
@@ -88,8 +84,6 @@ def rank(in_str, script, general_script):
 
     # Sort list of keywords according to list of ranks
     sorted_keywords = [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
-    
-    print(sentences[max_index], sorted_keywords)
 
     return sentences[max_index], sorted_keywords
 
