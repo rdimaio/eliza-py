@@ -1,5 +1,6 @@
 import os
 import re
+import string
 import json
 
 from decomp2regex import decomp_to_regex
@@ -30,7 +31,7 @@ def substitute(in_str, general_script):
         if word in general_script['substitutions']:
             # Need to use regex to replace whole words only
             # Otherwise due to substitutions like I -> You, "thing" would become "thyoung"
-            in_str = re.sub(r"\b%s\b" % word, general_script['substitutions'][word], in_str)
+            in_str = re.sub(r"\b%s\b[,.!?]*" % word, general_script['substitutions'][word], in_str)
 
     return in_str
 
@@ -41,30 +42,38 @@ def rank(in_str, script):
     and the descending sorted list of keywords for that sentence."""
 
     # Break down input into punctuation-delineated sentences
-    sentences = re.split(r'\.|,|:|;|-|—', in_str)
+    sentences = re.split(r'[.,!?](?!$)', in_str)
 
     all_keywords = []
     all_ranks = []
     maximums = []
 
-    for sentence in sentences:
+    # Iterating using index so that sentences in the list can be modified directly
+    for i in range(0, len(sentences)):
+        sentences[i] = sentences[i].translate(str.maketrans('', '', string.punctuation))
+        print("iterating")
+        print(sentences[i])
 
-        keywords = sentence.split()
-        all_keywords.append(keywords)
+        # Check if sentence is not empty at this point
+        if sentences[i]:
+            keywords = sentences[i].split()
+            all_keywords.append(keywords)
+            print(keywords)
+            
+            ranks = []
 
-        ranks = []
+            # Populate list of ranks
+            for keyword in keywords:
+                for d in script:
+                    if d['keyword'] == keyword:
+                        ranks.append(d['rank'])
+                        break
+                # If no rank has been specified for a word, set its rank to 0
+                else:
+                    ranks.append(0)
 
-        # Populate list of ranks
-        for keyword in keywords:
-            for d in script:
-                if d['keyword'] == keyword:
-                    ranks.append(d['rank'])
-                    break
-            # If no rank has been specified for a word, set its rank to 0
-            else:
-                ranks.append(0)
-        
-        maximums.append(max(ranks))
+            maximums.append(max(ranks))
+
         all_ranks.append(ranks)
         
     # Return earliest sentence with highest keyword rank
@@ -76,6 +85,8 @@ def rank(in_str, script):
 
     # Sort list of keywords according to list of ranks
     sorted_keywords = [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
+    
+    print(sentences[max_index], sorted_keywords)
 
     return sentences[max_index], sorted_keywords
 
@@ -153,7 +164,7 @@ while in_str not in exit_inputs:
     # if a string contains any characters of the alphabet.
     # Source: https://stackoverflow.com/a/59301031
     if not in_str.upper().isupper():
-        in_str = input('Eliza: Please, use letters. I am a human, after all.\nYou:')
+        in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
         continue
 
     # Substitute words if necessary
@@ -164,14 +175,16 @@ while in_str not in exit_inputs:
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:
+        print(sentence)
         comps, reassembly_rule = decompose(keyword, sentence, script)
         # Break if matching decomposition rule has been found
         if comps:
-            # For certain keywords, store in memory stack
+            # For certain keywords, generate an additional response to push onto memory stack
             if keyword == 'your':
                 mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
                 mem_response = reassemble(mem_comps, mem_reassembly_rule)
                 memory_stack.append(mem_response)
+            print(comps)
             response = reassemble(comps, reassembly_rule)
             break
     # If no matching decomposition rule has been found
