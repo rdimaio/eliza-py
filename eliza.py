@@ -147,7 +147,14 @@ script = process_decomp_rules(script, general_script)
 # Get first user input
 in_str = input("Eliza: Welcome.\nYou: ")
 
-while in_str and in_str not in exit_inputs:
+while in_str not in exit_inputs:
+
+    # str.upper().isupper() is a fast way of checking
+    # if a string contains any characters of the alphabet.
+    # Source: https://stackoverflow.com/a/59301031
+    if not in_str.upper().isupper():
+        in_str = input('Eliza: Please, use letters. I am a human, after all.\nYou:')
+        continue
 
     # Substitute words if necessary
     in_str = substitute(in_str, general_script)
