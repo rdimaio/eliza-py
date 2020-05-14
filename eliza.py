@@ -26,17 +26,15 @@ def get_exit_inputs(general_script):
     return general_script['exit_inputs']
 
 def substitute(in_str, general_script):
+    out_str = ''
     for word in in_str.split():
         word = word.lower()
-        print(word)
         if word in general_script['substitutions']:
-            # Need to use regex to replace whole words only
-            # Otherwise due to substitutions like I -> You, "thing" would become "thyoung"
-            in_str = re.sub(r'\b%s\b[,.!?]*' % word, general_script['substitutions'][word], in_str, flags=re.IGNORECASE)
-            print(in_str)
-            print("substi")
+            out_str += general_script['substitutions'][word] + ' '
+        else:
+            out_str += word + ' '
 
-    return in_str
+    return out_str
 
 def rank(in_str, script, general_script):
     """Rank keywords according to script.
@@ -54,6 +52,8 @@ def rank(in_str, script, general_script):
     # Iterating using index so that sentences in the list can be modified directly
     for i in range(0, len(sentences)):
         sentences[i] = re.sub(r'[#$%&()*+,-./:;<=>?@[\]^_{|}~]', '', sentences[i])
+        print("iterating")
+        print(sentences[i])
 
         sentences[i] = substitute(sentences[i], general_script)
 
@@ -61,6 +61,7 @@ def rank(in_str, script, general_script):
         if sentences[i]:
             keywords = sentences[i].lower().split()
             all_keywords.append(keywords)
+            print(keywords)
             
             ranks = []
 
@@ -87,7 +88,8 @@ def rank(in_str, script, general_script):
 
     # Sort list of keywords according to list of ranks
     sorted_keywords = [x for _,x in sorted(zip(ranks, keywords), reverse=True)]
-
+    
+    print(sentences[max_index], sorted_keywords)
 
     return sentences[max_index], sorted_keywords
 
@@ -143,8 +145,8 @@ def reassemble(components, reassembly_rule):
         else:
             response += comp + " "
 
-    # Substitute trailing space with newline
-    response = response[:-1] + "\nYou: "
+    # Remove trailing space
+    response = response[:-1]
 
     return response
 
@@ -196,6 +198,14 @@ while in_str not in exit_inputs:
         else:
             comps, reassembly_rule = decompose('$', '$', script)
             response = reassemble(comps, reassembly_rule)
+
+    # Clean up response
+    # Remove extra whitespaces
+    response = ' '.join(response.split())
+    # Remove whitespaces before punctuation
+    response = re.sub(r'\s([?.!"](?:\s|$))', r'\1', response)
+
+    response += "\nYou: "
 
     # Get next user input
     in_str = input(response)
