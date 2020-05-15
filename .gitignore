@@ -54,13 +54,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Translations
-*.mo
-*.pot
-
-# Scrapy stuff:
-.scrapy
-
 # Sphinx documentation
 docs/_build/
 
@@ -77,33 +70,7 @@ target/
 #   install all needed dependencies.
 #Pipfile.lock
 
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
 # mkdocs documentation
 /site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
 
 # End of https://www.gitignore.io/api/python
