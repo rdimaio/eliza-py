@@ -142,6 +142,11 @@ def reassemble(components, reassembly_rule):
 
     return response
 
+def prepare_response(response):
+    response = clean_string(response)
+    response += "\nYou: "
+    return response
+
 def clean_string(in_str):
     # Remove extra whitespaces
     in_str = ' '.join(in_str.split())
@@ -189,6 +194,7 @@ while in_str not in exit_inputs:
         if comps:
             # For certain keywords, generate an additional response to push onto memory stack
             if keyword in memory_inputs:
+                # '^' is the memory stack keyword
                 mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
                 mem_response = reassemble(mem_comps, mem_reassembly_rule)
                 memory_stack.append(mem_response)
@@ -202,12 +208,11 @@ while in_str not in exit_inputs:
             response = memory_stack.pop()
         # Otherwise, respond with a generic answer
         else:
+            # '$' is the generic answer keyword
             comps, reassembly_rule = decompose('$', '$', script)
             response = reassemble(comps, reassembly_rule)
 
-    response = clean_string(response)
-
-    response += "\nYou: "
+    response = prepare_response(response)
 
     # Get next user input
     in_str = input(response)
