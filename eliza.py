@@ -355,7 +355,28 @@ def clean_string(in_str):
 
     return in_str
 
-def generate_response(in_str, script, substitutions, memory_stack):
+def generate_response(in_str, script, substitutions, memory_stack, memory_inputs):
+    """Generate response from user input, according to a script.
+
+    Parameters
+    ----------
+    in_str : str
+        User input.
+    script : dict[]
+        JSON object containing information on keywords and rules.
+    substitutions : dict
+        Key-value pairs where key = word to substitute, value = new word.
+    memory_stack : str[]
+        Stack of responses generated when `generate_memory_response` is prompted.
+    memory_inputs : str[]
+        Keywords that prompt `generate_memory_response`.
+
+    Returns
+    -------
+    response : str
+        Generated response.
+
+    """
     # Break down input into punctuation-delineated sentences
     sentences = re.split(r'[.,!?](?!$)', in_str)
 
@@ -369,10 +390,7 @@ def generate_response(in_str, script, substitutions, memory_stack):
         if comps:
             # For certain keywords, generate an additional response to push onto memory stack
             if keyword in memory_inputs:
-                # '^' is the memory stack keyword
-                mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
-                mem_response = reassemble(mem_comps, mem_reassembly_rule)
-                memory_stack.append(mem_response)
+                generate_memory_response(sentence, script, memory_stack)
             response = reassemble(comps, reassembly_rule)
             break
     # If no matching decomposition rule has been found
@@ -389,35 +407,69 @@ def generate_response(in_str, script, substitutions, memory_stack):
     return response
 
 def generate_generic_response(script):
+    """Generate a generic response that is independent of the user input.
+
+    Parameters
+    ----------
+    script : dict[]
+        JSON object containing information on keywords and rules.
+
+    Returns
+    -------
+    response : str
+        Generic response.
+    
+    """
     # '$' is the generic answer keyword
     comps, reassembly_rule = decompose('$', '$', script)
     return reassemble(comps, reassembly_rule)
 
+def generate_memory_response(sentence, script, memory_stack):
+    """Generate a response for the memory stack.
 
-memory_stack = []
-general_script, script, memory_inputs, exit_inputs = setup()
+    Parameters
+    ----------
+    sentence : str
+        Current sentence to decompose and reassemble.
+    script : dict[]
+        JSON object containing information on keywords and rules.
+    memory_stack : str[]
+        Stack of responses generated when `generate_memory_response` is prompted.
+    
+    """
+    # '^' is the memory stack keyword
+    mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
+    mem_response = reassemble(mem_comps, mem_reassembly_rule)
+    memory_stack.append(mem_response)
 
-# Get first user input
-in_str = input("Eliza: Welcome.\nYou: ")
+def main():
+    memory_stack = []
+    general_script, script, memory_inputs, exit_inputs = setup()
 
-# Main execution loop
-while in_str not in exit_inputs:
+    # Get first user input
+    in_str = input("Eliza: Welcome.\nYou: ")
 
-    # str.upper().isupper() is a fast way of checking
-    # if a string contains any characters of the alphabet.
-    # Source: https://stackoverflow.com/a/59301031
-    if not in_str.upper().isupper():
-        in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
-        continue
+    # Main execution loop
+    while in_str not in exit_inputs:
 
-    if in_str.lower() == 'reset':
-        reset_all_last_used_reassembly_rule(script)
-        in_str = input('Eliza: Reset complete.\nYou:')
-        continue
+        # str.upper().isupper() is a fast way of checking
+        # if a string contains any characters of the alphabet.
+        # Source: https://stackoverflow.com/a/59301031
+        if not in_str.upper().isupper():
+            in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
+            continue
 
-    response = generate_response(in_str, script, general_script['substitutions'], memory_stack)
+        if in_str.lower() == 'reset':
+            reset_all_last_used_reassembly_rule(script)
+            in_str = input('Eliza: Reset complete.\nYou:')
+            continue
 
-    # Get next user input
-    in_str = input(response)
+        response = generate_response(in_str, script, general_script['substitutions'], memory_stack, memory_inputs)
 
-print("Eliza: Goodbye.\n")
+        # Get next user input
+        in_str = input(response)
+
+    print("Eliza: Goodbye.\n")
+
+if __name__=="__main__":
+   main()
