@@ -7,6 +7,7 @@ from decomp2regex import decomp_to_regex
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 GENERAL_SCRIPT_PATH = os.path.join(PROJECT_DIR, 'general.json')
 SCRIPT_PATH = os.path.join(PROJECT_DIR, 'doctor.json')
+NSCRIPT_PATH = os.path.join(PROJECT_DIR, 'doctor2.json')
 
 def load_script(script_path):
     """Loads script from JSON file."""
@@ -144,6 +145,14 @@ def reassemble(components, reassembly_rule):
 
     return response
 
+def clean_string(in_str):
+    # Remove extra whitespaces
+    in_str = ' '.join(in_str.split())
+    # Remove whitespaces before punctuation
+    in_str = re.sub(r'\s([?.!"](?:\s|$))', r'\1', in_str)
+
+    return in_str
+
 memory_stack = []
 
 # Load scripts
@@ -162,6 +171,14 @@ while in_str not in exit_inputs:
     # Source: https://stackoverflow.com/a/59301031
     if not in_str.upper().isupper():
         in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
+        continue
+
+    if in_str.lower() == 'reset':
+        # Reset "last_used_reassembly_rule" for all rules
+        for d in script:
+            for rule in d['rules']:
+                rule['last_used_reassembly_rule'] = 0
+        in_str = input('Eliza: Reset complete.\nYou:')
         continue
 
     # Substitute words if necessary
@@ -193,11 +210,7 @@ while in_str not in exit_inputs:
             comps, reassembly_rule = decompose('$', '$', script)
             response = reassemble(comps, reassembly_rule)
 
-    # Clean up response
-    # Remove extra whitespaces
-    response = ' '.join(response.split())
-    # Remove whitespaces before punctuation
-    response = re.sub(r'\s([?.!"](?:\s|$))', r'\1', response)
+    response = clean_string(response)
 
     response += "\nYou: "
 

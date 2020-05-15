@@ -16,15 +16,6 @@
                     "Does talking about this bother you?"
                 ],
                 "last_used_reassembly_rule": 0
-            },
-            {
-                "decomp": "(0)",
-                "reassembly": 
-                [
-                    "Why do you say 'am'?",
-                    "I don't understand that."
-                ],
-                "last_used_reassembly_rule": 0
             }
         ],
         "_comment": "This is a placeholder keyword to be used when a generic answer is to be given."

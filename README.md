@@ -13,12 +13,6 @@ and the sentence with the highest ranked keyword is chosen to be decomposed.
         - The emphasis of the user's input may not necessarily be in the first section of the sentence
         - The section with the highest ranked keyword has a higher chance of having decomposition rules
         for that keyword, as it has a rank in the first place
-- The ID of the last reassembly rule used for each decomposition rule is stored in the script file.
-    - This way, Weizenbaum's concept of making the program feel less repetitive during a given session
-    is extended to feel less repetitive throughout multiple sessions.
-    - (note that the memory stack discussed in the paper does not persist through sessions, like the original;
-    otherwise the program would "remember" your input (or another user's input) from past sessions,
-    even though each session should only focus on the current user's present thoughts.)
 - `DLIST` in the original implementation is called `tag` in this implementation. It works the same way.
 - In the original implementation, the keyword `my` is associated with the memory stack (p. 6);
 in this implementation, the memory stack is called when no matching decomposition rule is found.
@@ -35,4 +29,4 @@ I think JSON can store this information structure in a much more intuitive way.
 - Could translate to Italian
 
 # References
-J. Weizenbaum, “ELIZA—a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)
+J. Weizenbaum, “ELIZA-a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)
