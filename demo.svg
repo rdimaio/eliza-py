@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="terminal" baseProfile="full" viewBox="0 0 1896 1022" width="1896" version="1.1">
+    <defs>
+        <termtosvg:template_settings xmlns:termtosvg="https://github.com/nbedos/termtosvg">
+            <termtosvg:screen_geometry columns="237" rows="60"/>
+            <termtosvg:animation type="css"/>
+        </termtosvg:template_settings>
+        <style type="text/css" id="generated-style"><![CDATA[#screen {
+                font-family: 'DejaVu Sans Mono', monospace;
+                font-style: normal;
+                font-size: 14px;
+            }
+
+        text {
+            dominant-baseline: text-before-edge;
+            white-space: pre;
+        }
+    
+            :root {
+                --animation-duration: 2499ms;
+            }
+
+            @keyframes roll {
+                0.000%{transform:translateY(0px)}
+1.240%{transform:translateY(-1054px)}
+1.921%{transform:translateY(-2108px)}
+2.841%{transform:translateY(-3162px)}
+3.001%{transform:translateY(-4216px)}
+42.457%{transform:translateY(-5270px)}
+48.379%{transform:translateY(-6324px)}
+51.861%{transform:translateY(-7378px)}
+56.263%{transform:translateY(-8432px)}
+59.824%{transform:translateY(-9486px)}
+59.984%{transform:translateY(-10540px)}
+100.000%{transform:translateY(-10540px)}
+            }
+
+            #screen_view {
+                animation-duration: 2499ms;
+                animation-iteration-count:infinite;
+                animation-name:roll;
+                animation-timing-function: steps(1,end);
+                animation-fill-mode: forwards;
+            }
+        ]]></style>
+        <style type="text/css" id="user-style">
+            /* The colors defined below are the default 16 colors used for rendering text of the terminal. Adjust
+               them as needed.
+               PowerShell colors based on https://en.wikipedia.org/wiki/ANSI_escape_code#Colors */
+            .foreground {fill: #cccccc;}
+            .background {fill: #0c0c0c;}
+            .color0 {fill: #0c0c0c;}
+            .color1 {fill: #c50f1f;}
+            .color2 {fill: #13a10e;}
+            .color3 {fill: #c19c00;}
+            .color4 {fill: #0037da;}
+            .color5 {fill: #881798;}
+            .color6 {fill: #3a96dd;}
+            .color7 {fill: #cccccc;}
+            .color8 {fill: #767676;}
+            .color9 {fill: #e74856;}
+            .color10 {fill: #16c60c;}
+            .color11 {fill: #f9f1a5;}
+            .color12 {fill: #3b78ff;}
+            .color13 {fill: #b4009e;}
+            .color14 {fill: #61d6d6;}
+            .color15 {fill: #f2f2f2;}
+        </style>
+    </defs>
+    <svg id="screen" width="1896" height="1020" viewBox="0 0 1896 1020" preserveAspectRatio="xMidYMin slice">
+    <rect class="background" height="100%" width="100%" x="0" y="0"/><defs><g id="g1"><text x="0" textLength="8" class="background"> </text></g><g id="g2"><text x="0" textLength="8" class="background"> </text><text x="8" textLength="1888" class="foreground">                                                                                                                                                                                                                                            </text></g><g id="g3"><text x="0" textLength="8" font-weight="bold" class="color9">[</text><text x="8" textLength="40" font-weight="bold" class="color11">ramdm</text><text x="48" textLength="8" font-weight="bold" class="color10">@</text><text x="56" textLength="96" font-weight="bold" class="color12">rickpadt530 </text><text x="152" textLength="8" font-weight="bold" class="color13">~</text><text x="160" textLength="8" font-weight="bold" class="color9">]</text><text x="168" textLength="16" font-weight="bold" fill="#ff8700"> λ</text><text x="184" textLength="8" font-weight="bold" class="foreground"> </text><text x="192" textLength="8" class="background"> </text><text x="200" textLength="1592" class="foreground">                                                                                                                                                                                                       </text><text x="1792" textLength="8" fill="#00d7ff">❰</text><text x="1800" textLength="8" class="foreground"> </text><text x="1808" textLength="80" class="color6">[07:15:06]</text><text x="1888" textLength="8" class="foreground"> </text></g><g id="g4"><text x="0" textLength="8" font-weight="bold" class="color9">[</text><text x="8" textLength="40" font-weight="bold" class="color11">ramdm</text><text x="48" textLength="8" font-weight="bold" class="color10">@</text><text x="56" textLength="96" font-weight="bold" class="color12">rickpadt530 </text><text x="152" textLength="8" font-weight="bold" class="color13">~</text><text x="160" textLength="8" font-weight="bold" class="color9">]</text><text x="168" textLength="16" font-weight="bold" fill="#ff8700"> λ</text><text x="184" textLength="8" font-weight="bold" class="foreground"> </text><text x="192" textLength="8" text-decoration="underline" class="foreground">e</text><text x="200" textLength="8" class="background">x</text><text x="208" textLength="16" font-weight="bold" class="color8">it</text><text x="224" textLength="1568" class="foreground">                                                                                                                                                                                                    </text><text x="1792" textLength="8" fill="#00d7ff">❰</text><text x="1800" textLength="8" class="foreground"> </text><text x="1808" textLength="80" class="color6">[07:15:06]</text><text x="1888" textLength="8" class="foreground"> </text></g><g id="g5"><text x="0" textLength="8" font-weight="bold" class="color9">[</text><text x="8" textLength="40" font-weight="bold" class="color11">ramdm</text><text x="48" textLength="8" font-weight="bold" class="color10">@</text><text x="56" textLength="96" font-weight="bold" class="color12">rickpadt530 </text><text x="152" textLength="8" font-weight="bold" class="color13">~</text><text x="160" textLength="8" font-weight="bold" class="color9">]</text><text x="168" textLength="16" font-weight="bold" fill="#ff8700"> λ</text><text x="184" textLength="8" font-weight="bold" class="foreground"> </text><text x="192" textLength="16" font-weight="bold" class="color10">ex</text><text x="208" textLength="8" class="background">i</text><text x="216" textLength="8" font-weight="bold" class="color8">t</text><text x="224" textLength="1568" class="foreground">                                                                                                                                                                                                    </text><text x="1792" textLength="8" fill="#00d7ff">❰</text><text x="1800" textLength="8" class="foreground"> </text><text x="1808" textLength="80" class="color6">[07:15:06]</text><text x="1888" textLength="8" class="foreground"> </text></g><g id="g6"><text x="0" textLength="8" font-weight="bold" class="color9">[</text><text x="8" textLength="40" font-weight="bold" class="color11">ramdm</text><text x="48" textLength="8" font-weight="bold" class="color10">@</text><text x="56" textLength="96" font-weight="bold" class="color12">rickpadt530 </text><text x="152" textLength="8" font-weight="bold" class="color13">~</text><text x="160" textLength="8" font-weight="bold" class="color9">]</text><text x="168" textLength="16" font-weight="bold" fill="#ff8700"> λ</text><text x="184" textLength="8" font-weight="bold" class="foreground"> </text><text x="192" textLength="24" font-weight="bold" class="color9">exi</text><text x="216" textLength="8" class="background">t</text><text x="224" textLength="1568" class="foreground">                                                                                                                                                                                                    </text><text x="1792" textLength="8" fill="#00d7ff">❰</text><text x="1800" textLength="8" class="foreground"> </text><text x="1808" textLength="80" class="color6">[07:15:06]</text><text x="1888" textLength="8" class="foreground"> </text></g><g id="g7"><text x="0" textLength="8" font-weight="bold" class="color9">[</text><text x="8" textLength="40" font-weight="bold" class="color11">ramdm</text><text x="48" textLength="8" font-weight="bold" class="color10">@</text><text x="56" textLength="96" font-weight="bold" class="color12">rickpadt530 </text><text x="152" textLength="8" font-weight="bold" class="color13">~</text><text x="160" textLength="8" font-weight="bold" class="color9">]</text><text x="168" textLength="16" font-weight="bold" fill="#ff8700"> λ</text><text x="184" textLength="8" font-weight="bold" class="foreground"> </text><text x="192" textLength="32" class="color2">exit</text><text x="224" textLength="8" class="background"> </text><text x="232" textLength="1560" class="foreground">                                                                                                                                                                                                   </text><text x="1792" textLength="8" fill="#00d7ff">❰</text><text x="1800" textLength="8" class="foreground"> </text><text x="1808" textLength="80" class="color6">[07:15:06]</text><text x="1888" textLength="8" class="foreground"> </text></g><g id="g8"><text x="0" textLength="8" font-weight="bold" class="color9">[</text><text x="8" textLength="40" font-weight="bold" class="color11">ramdm</text><text x="48" textLength="8" font-weight="bold" class="color10">@</text><text x="56" textLength="96" font-weight="bold" class="color12">rickpadt530 </text><text x="152" textLength="8" font-weight="bold" class="color13">~</text><text x="160" textLength="8" font-weight="bold" class="color9">]</text><text x="168" textLength="16" font-weight="bold" fill="#ff8700"> λ</text><text x="184" textLength="8" font-weight="bold" class="foreground"> </text><text x="192" textLength="32" class="color2">exit</text><text x="224" textLength="1568" class="foreground">                                                                                                                                                                                                    </text><text x="1792" textLength="8" fill="#00d7ff">❰</text><text x="1800" textLength="8" class="foreground"> </text><text x="1808" textLength="80" class="color6">[07:15:06]</text><text x="1888" textLength="8" class="foreground"> </text></g></defs><g id="screen_view"><g><rect x="0" y="0" width="8" height="17" class="foreground"/><use xlink:href="#g1" y="0"/></g><g><rect x="0" y="1054" width="8" height="17" class="foreground"/><use xlink:href="#g1" y="1054"/></g><g><rect x="0" y="2108" width="8" height="17" class="foreground"/><use xlink:href="#g2" y="2108"/></g><g><rect x="192" y="3162" width="8" height="17" class="foreground"/><use xlink:href="#g3" y="3162"/></g><g><rect x="192" y="4216" width="8" height="17" class="foreground"/><use xlink:href="#g3" y="4216"/></g><g><rect x="200" y="5270" width="8" height="17" class="foreground"/><use xlink:href="#g4" y="5270"/></g><g><rect x="208" y="6324" width="8" height="17" class="foreground"/><use xlink:href="#g5" y="6324"/></g><g><rect x="216" y="7378" width="8" height="17" class="foreground"/><use xlink:href="#g6" y="7378"/></g><g><rect x="224" y="8432" width="8" height="17" class="foreground"/><use xlink:href="#g7" y="8432"/></g><g><use xlink:href="#g8" y="9486"/><rect x="0" y="9503" width="8" height="17" class="foreground"/><use xlink:href="#g1" y="9503"/></g><g><use xlink:href="#g8" y="10540"/><rect x="0" y="10557" width="8" height="17" class="foreground"/><use xlink:href="#g1" y="10557"/></g></g></svg>
+</svg>
