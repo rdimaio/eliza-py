@@ -5,9 +5,9 @@ import json
 from decomp2regex import decomp_to_regex
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
-GENERAL_SCRIPT_PATH = os.path.join(PROJECT_DIR, 'general.json')
-SCRIPT_PATH = os.path.join(PROJECT_DIR, 'doctor.json')
-NSCRIPT_PATH = os.path.join(PROJECT_DIR, 'doctor2.json')
+SCRIPT_DIR = os.path.join(PROJECT_DIR, 'scripts')
+GENERAL_SCRIPT_PATH = os.path.join(SCRIPT_DIR, 'general.json')
+SCRIPT_PATH = os.path.join(SCRIPT_DIR, 'doctor.json')
 
 def load_script(script_path):
     """Loads script from JSON file."""
@@ -180,9 +180,6 @@ while in_str not in exit_inputs:
                 rule['last_used_reassembly_rule'] = 0
         in_str = input('Eliza: Reset complete.\nYou:')
         continue
-
-    # Substitute words if necessary
-    #in_str = substitute(in_str, general_script)
 
     # Get sentence in input with highest ranked word and sort keywords by rank
     sentence, sorted_keywords = rank(in_str, script, general_script)
