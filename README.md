@@ -1,6 +1,24 @@
 # eliza.py
+**ELIZA** is a natural language processing program developed from 1964 to 1966 by Joseph Weizenbaum, originally implemented in MAD-SLIP. You can read the 1966 paper [here](https://dl.acm.org/doi/10.1145/365153.365168).
 
-The `doctor` script has been filled according to the appendix in the original paper (p. 9), including ranks.
+This is a Python implementation.
+
+# Script structure
+
+## scripts/general.json
+This script handles general English language information that is not necessarily tied into the other script the program uses,
+as well as useful inputs for the program.
+
+- `substitutions`: specifies which keywords should be substituted before applying a custom script
+- `tags`: specifies keywords that have
+- `memory_inputs`: array of keywords that prompt the generation of an additional response added to the memory stack
+- `exit_inputs`: array of keywords that can be used to quit the program
+
+## scripts/doctor.json
+This script simulates a **Rogerian psychotherapist**.
+
+This script has been filled according to the appendix in the original paper (p. 9), including ranks.
+Some small additions have been made to make the program feel a bit nicer.
 
 # FAQ
 
@@ -29,4 +47,6 @@ I think JSON can store this information structure in a much more intuitive way.
 - Could translate to Italian
 
 # References
-J. Weizenbaum, “ELIZA-a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)
+- J. Weizenbaum, “ELIZA-a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)
+
+- The script file from [Charles Hayen's Java implementation of ELIZA](http://chayden.net/eliza/Eliza.html)

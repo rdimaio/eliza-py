@@ -23,9 +23,6 @@ def process_decomp_rules(script, general_script):
             rule['decomp'] = decomp_to_regex(rule['decomp'], general_script) 
     return script
 
-def get_exit_inputs(general_script):
-    return general_script['exit_inputs']
-
 def substitute(in_str, general_script):
     out_str = ''
     for word in in_str.split():
@@ -157,7 +154,8 @@ memory_stack = []
 
 # Load scripts
 general_script = load_script(GENERAL_SCRIPT_PATH)
-exit_inputs = get_exit_inputs(general_script)
+exit_inputs = general_script['exit_inputs']
+memory_inputs = general_script['memory_inputs']
 script = load_script(SCRIPT_PATH)
 script = process_decomp_rules(script, general_script)
 
@@ -190,7 +188,7 @@ while in_str not in exit_inputs:
         # Break if matching decomposition rule has been found
         if comps:
             # For certain keywords, generate an additional response to push onto memory stack
-            if keyword == 'your':
+            if keyword in memory_inputs:
                 mem_comps, mem_reassembly_rule = decompose('^', sentence, script)
                 mem_response = reassemble(mem_comps, mem_reassembly_rule)
                 memory_stack.append(mem_response)
