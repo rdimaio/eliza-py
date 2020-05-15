@@ -35,7 +35,10 @@ def decomp_to_regex(in_str, tags):
                 # Make a regex separating each option with OR operator e.g. x|y|z
                 for synonym in tags[tag_name]:
                     w += synonym + '|'
+                # Remove last |
                 w = w[:-1]
+                # Add word boundaries
+                w = r'\b(' + w + r')\b'
         else:
             # Add word boundaries to match on a whole word basis
             w = r'\b' + w + r'\b'

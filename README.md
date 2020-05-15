@@ -1,11 +1,15 @@
 # eliza.py
-**ELIZA** is a natural language processing program developed from 1964 to 1966 by Joseph Weizenbaum, originally implemented in MAD-SLIP. You can read the 1966 paper [here](https://dl.acm.org/doi/10.1145/365153.365168). 
+**ELIZA** is a natural language processing program developed from 1964 to 1966 by Joseph Weizenbaum, 
+originally implemented in MAD-SLIP. 
+You can read the 1966 paper [here](https://dl.acm.org/doi/10.1145/365153.365168). 
 
-ELIZA uses pattern matching, decomposition and reassembly rules to emulate a Rogerian psychotherapist.
+ELIZA uses pattern matching, decomposition and reassembly rules 
+to emulate a Rogerian psychotherapist.
 
 # Download
 ## Requirements
-- Python 3.x (should work with Python 2 by adjusting back the syntax of some commands)
+- Python 3.x 
+(should work with Python 2 by adjusting back the syntax of some commands)
 
 ## Via command-line
 ```bash
@@ -25,7 +29,7 @@ Eliza: Hi.
 You: [type something]
 ```
 
-## Example conversation (using the same inputs as the original paper, p. 1-2)
+## Example conversation (using the same inputs as the original paper, pp. 1-2)
 ```
 You: Men are all alike.
 Eliza: In what way?
@@ -92,6 +96,10 @@ Each element in the JSON file follows this structure:
 - `rules`: Array of decomposition rules and matching reassembly rules in the form:
     - `decomp`: Decomposition rule (using the same syntax as the original 1966 paper)
     - `reassembly`: Array of reassembly rules to be used with the decomposition rule specified in `decomp`
+        - Reassembly rules use 1-indexing like in the original paper;
+        note that when a `tag` in a decomposition rule is equivalent
+        to two components in its reassembly rules instead of one
+        (to be able to use regex)
     - `last_used_reassembly_rule`: ID of last used reassembly rule for this decomposition rule (0-indexed);
     it is incremented everytime the decomposition rule is matched and it cycles back to the beginning
     when the last reassembly rule in the array is used.

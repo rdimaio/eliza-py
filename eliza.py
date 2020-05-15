@@ -80,14 +80,14 @@ def process_decomp_rules(script, tags):
     return script
 
 def substitute(in_str, substitutions):
-    """
+    """Substitute words in a string according to a dict.
+
     Parameters
     ----------
     in_str : str
         String to apply substitutions to.
-
     substitutions : dict
-        Key-value pairs where the key must be substituted by its value.
+        Key-value pairs where key = word to substitute, value = new word.
 
     Returns
     -------
@@ -96,26 +96,40 @@ def substitute(in_str, substitutions):
 
     """
     out_str = ''
+    # Cycle through all words in string
     for word in in_str.split():
         word = word.lower()
+        # If substitutions specifies a substitution for this word, substitute it
         if word in substitutions:
             out_str += substitutions[word] + ' '
+        # Otherwise carry over the same word
         else:
             out_str += word + ' '
 
     return out_str
 
 def rank(sentences, script, substitutions):
-    """Rank keywords according to script.
-    Only considers sentence with highest ranked word.
-    Returns the actual sentence with highest ranked word,
-    and the descending sorted list of keywords for that sentence.
+    """Rank keywords according to a script.
+    Only returns the sentence with the highest ranked keyword.
 
     Parameters
     ----------
+    sentences : str[]
+        Array of sentences.
+
+    script : dict[]
+        JSON object containing ranks of different keywords.
+
+    substitutions : dict
+        Key-value pairs where key = word to substitute, value = new word.
 
     Returns
     -------
+    sentences[max_index] : str
+        Sentence with highest ranked keyword in `sentences`.
+    sorted_keywords : str[]
+        Words in `sentences[max_index]` sorted in descending order based on their rank.
+
     """
 
     all_keywords = []
@@ -124,7 +138,9 @@ def rank(sentences, script, substitutions):
 
     # Iterating using index so that sentences in the list can be modified directly
     for i in range(0, len(sentences)):
+        # Remove all punctuation
         sentences[i] = re.sub(r'[#$%&()*+,-./:;<=>?@[\]^_{|}~]', '', sentences[i])
+        # Substitute keywords
         sentences[i] = substitute(sentences[i], substitutions)
 
         # Check if sentence is not empty at this point
@@ -132,18 +148,10 @@ def rank(sentences, script, substitutions):
             keywords = sentences[i].lower().split()
             all_keywords.append(keywords)
             
-            ranks = []
+            # Get ranks for this sentence
+            ranks = get_ranks(keywords, script)
 
-            # Populate list of ranks
-            for keyword in keywords:
-                for d in script:
-                    if d['keyword'] == keyword:
-                        ranks.append(d['rank'])
-                        break
-                # If no rank has been specified for a word, set its rank to 0
-                else:
-                    ranks.append(0)
-
+            # Append maximum rank in this sentence
             maximums.append(max(ranks))
 
         all_ranks.append(ranks)
@@ -160,19 +168,57 @@ def rank(sentences, script, substitutions):
 
     return sentences[max_index], sorted_keywords
 
-def decompose(keyword, in_str, script):
-    """Find matching decomposition rule for a given keyword.
-    If a matching decomposition rule is found, 
-    it returns a list of components broken down according to the decomposition rule,
-    along with the reassembly rule to use.
-    If a matching decomposition rule is not found,
-    it returns an empty list and an empty string.
+def get_ranks(keywords, script):
+    """Return ranks of queried keyword in a given script.
 
     Parameters
     ----------
+    keywords : str[]
+        Array of keywords to search in the script.
+    script : dict[]
+        JSON object containing ranks of different keywords.
+    
+    Returns
+    -------
+    ranks : int[]
+        Array of integers in the same order as their respective keywords
+    
+    """
+
+    ranks = []
+    # Populate list of ranks
+    for keyword in keywords:
+        for d in script:
+            if d['keyword'] == keyword:
+                ranks.append(d['rank'])
+                break
+        # If no rank has been specified for a word, set its rank to 0
+        else:
+            ranks.append(0)
+    
+    return ranks
+
+def decompose(keyword, in_str, script):
+    """Find matching decomposition rule for a given keyword and string, if possible.
+
+    Parameters
+    ----------
+    keyword : str
+        Keyword used to query the script for decomposition rules.
+    in_str : str
+        String used as input to the decomposition rules.
+    script : dict[]
+        JSON object containing decomposition rules for various keywords.
 
     Returns
     -------
+    comps : str[]
+        List of components decomposed according to the matching decomposition rule.
+        Empty if no matching decomposition rule is found.
+    reassembly_rule : str
+        Reassembly rule that must be used to reassemble comps.
+        Empty if no matching decomposition rule is found.
+
     """
 
     comps = []
@@ -190,25 +236,64 @@ def decompose(keyword, in_str, script):
                     comps = list(m.groups())
                     # Get reassembly rule
                     reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
-                    # Update last used reassembly rule ID
-                    next_id = rule['last_used_reassembly_rule']+1
-                    # If all reassembly rules have been used, start over
-                    if next_id >= len(rule['reassembly']):
-                        next_id = 0
-                    rule['last_used_reassembly_rule'] = next_id
+                    update_last_used_reassembly_rule(rule)
                     break
             break
 
     return comps, reassembly_rule
 
-def reassemble(components, reassembly_rule):
-    """Reassemble a list of strings given a reassembly rule.
-    Note: reassembly rules are 1-indexed, according to the original paper.
+def update_last_used_reassembly_rule(rule):
+    """Update the `last_used_reassembly_rule` ID for a given `rule`.
+    Cycle back to 0 if all reassembly rules for the respective decomposition rule have been used.
+
     Parameters
     ----------
+    rule : dict
+        Rule containing a decomposition rule, 
+        one or more reassembly rules and a `last_used_reassembly_rule` counter.
 
     Returns
     -------
+    next_id : int
+        Value to assign to `last_used_reassembly_rule` for the input `rule`.
+    """
+
+    # Update last used reassembly rule ID
+    next_id = rule['last_used_reassembly_rule']+1
+    # If all reassembly rules have been used, start over
+    if next_id >= len(rule['reassembly']):
+        next_id = 0
+    rule['last_used_reassembly_rule'] = next_id
+
+def reset_all_last_used_reassembly_rule(script):
+    """Reset all `last_used_reassembly_rule` in a script to 0.
+
+    Parameters
+    ----------
+    script : dict[]
+        JSON object with keywords and associated rules.
+    """
+
+    for d in script:
+        for rule in d['rules']:
+            rule['last_used_reassembly_rule'] = 0
+
+def reassemble(components, reassembly_rule):
+    """Reassemble a list of strings given a reassembly rule.
+    Note: reassembly rules are 1-indexed, according to the original paper.
+    
+    Parameters
+    ----------
+    components : str[]
+        Components to be assembled according to `reassembly_rule`.
+    reassembly_rule : str
+        Rule stating how to reassemble `components`.
+
+    Returns
+    -------
+    response : str
+        Reassembled components.
+
     """
 
     response = 'Eliza: '
@@ -217,11 +302,14 @@ def reassemble(components, reassembly_rule):
     reassembly_rule = reassembly_rule.split() 
 
     for comp in reassembly_rule:
-        # If comp is a number, then place the equivalent component
+        # If comp is a number, then place the component at that index
         if comp.isnumeric():
-            response += components[int(comp)-1] + " "
+            # int(comp)-1 due to the fact that 
+            # reassembly rules in Weizenbaum notation are 1-indexed
+            response += components[int(comp)-1] + ' '
+        # Otherwise, place the word itself
         else:
-            response += comp + " "
+            response += comp + ' '
 
     # Remove trailing space
     response = response[:-1]
@@ -229,24 +317,36 @@ def reassemble(components, reassembly_rule):
     return response
 
 def prepare_response(response):
-    """
+    """Processes the program's response before being shown to the user.
+    
     Parameters
     ----------
+    response : str
+        String to process.
 
     Returns
     -------
+    response : str
+        Processed string.
+
     """
     response = clean_string(response)
     response += "\nYou: "
     return response
 
 def clean_string(in_str):
-    """
+    """Removes superfluous characters from a string.
+    
     Parameters
     ----------
+    in_str : str
+        String to clean.
 
     Returns
     -------
+    in_str : str
+        Cleaned string.
+
     """
     # Remove extra whitespaces
     in_str = ' '.join(in_str.split())
@@ -255,36 +355,12 @@ def clean_string(in_str):
 
     return in_str
 
-memory_stack = []
-
-general_script, script, memory_inputs, exit_inputs = setup()
-
-# Get first user input
-in_str = input("Eliza: Welcome.\nYou: ")
-
-# Main execution loop
-while in_str not in exit_inputs:
-
-    # str.upper().isupper() is a fast way of checking
-    # if a string contains any characters of the alphabet.
-    # Source: https://stackoverflow.com/a/59301031
-    if not in_str.upper().isupper():
-        in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
-        continue
-
-    if in_str.lower() == 'reset':
-        # Reset "last_used_reassembly_rule" for all rules
-        for d in script:
-            for rule in d['rules']:
-                rule['last_used_reassembly_rule'] = 0
-        in_str = input('Eliza: Reset complete.\nYou:')
-        continue
-
+def generate_response(in_str, script, substitutions, memory_stack):
     # Break down input into punctuation-delineated sentences
     sentences = re.split(r'[.,!?](?!$)', in_str)
 
     # Get sentence in input with highest ranked word and sort keywords by rank
-    sentence, sorted_keywords = rank(sentences, script, general_script['substitutions'])
+    sentence, sorted_keywords = rank(sentences, script, substitutions)
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:
@@ -307,11 +383,39 @@ while in_str not in exit_inputs:
             response = memory_stack.pop()
         # Otherwise, respond with a generic answer
         else:
-            # '$' is the generic answer keyword
-            comps, reassembly_rule = decompose('$', '$', script)
-            response = reassemble(comps, reassembly_rule)
+            response = generate_generic_response(script)
 
     response = prepare_response(response)
+    return response
+
+def generate_generic_response(script):
+    # '$' is the generic answer keyword
+    comps, reassembly_rule = decompose('$', '$', script)
+    return reassemble(comps, reassembly_rule)
+
+
+memory_stack = []
+general_script, script, memory_inputs, exit_inputs = setup()
+
+# Get first user input
+in_str = input("Eliza: Welcome.\nYou: ")
+
+# Main execution loop
+while in_str not in exit_inputs:
+
+    # str.upper().isupper() is a fast way of checking
+    # if a string contains any characters of the alphabet.
+    # Source: https://stackoverflow.com/a/59301031
+    if not in_str.upper().isupper():
+        in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
+        continue
+
+    if in_str.lower() == 'reset':
+        reset_all_last_used_reassembly_rule(script)
+        in_str = input('Eliza: Reset complete.\nYou:')
+        continue
+
+    response = generate_response(in_str, script, general_script['substitutions'], memory_stack)
 
     # Get next user input
     in_str = input(response)
