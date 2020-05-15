@@ -304,7 +304,7 @@
                 "decomp": "(0 YOUR @FAMILY 0 YOU)",
                 "reassembly": 
                 [
-                    "Who else in your family 4 of you?",
+                    "Who else in your family 4 you?",
                     "Your 3 4 you?",
                     "Your 3 ?",
                     "What else comes to mind when you think of your 3 ?"
@@ -357,10 +357,11 @@
                 "decomp": "(0 YOUR 0 @FAMILY 0)",
                 "reassembly": 
                 [
+                    "Does that have anything to do with the fact that your 3 4 ?",
                     "Let's discuss your 4 further.",
                     "Earlier you mentioned your 4 .",
                     "Tell me more about your family.",
-                    "Apart from your 4 , who else in your family?",
+                    "Apart from your 4 , who else is in your family?",
                     "Your 4 ?",
                     "What else comes to mind when you think of your 4 ?"
                 ],
@@ -370,6 +371,7 @@
                 "decomp": "(0 YOUR 0)",
                 "reassembly": 
                 [
+                    "Does that have anything to do with the fact that your 3 ?",
                     "Let's discuss your 3 further.",
                     "Earlier you mentioned your 3 .",
                     "Do you have any other thoughts on your 3 ?",

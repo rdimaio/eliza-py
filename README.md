@@ -3,7 +3,71 @@
 
 ELIZA uses pattern matching, decomposition and reassembly rules to emulate a Rogerian psychotherapist.
 
+# Download
+## Requirements
+- Python 2.x/3.x
 
+## From GitHub
+
+## Via command-line
+```bash
+# Clone the repository
+$ git clone https://github.com/rdimaio/eliza-py
+```
+
+# Usage
+```bash
+# Go into the project folder
+$ cd eliza-py
+
+# Execute the file
+$ python eliza.py
+Eliza: Hi.
+[type]
+```
+
+## Example conversation (using the same inputs as the original paper, p. 1-2)
+```
+You: Men are all alike.
+Eliza: In what way?
+You: They're always bugging us about something or other.
+Eliza: Can you think of a specific example?
+You: Well, my boyfriend made me come here.
+Eliza: Your boyfriend made you come here?
+You: He says I'm depressed much of the time.
+Eliza: I am sorry to hear that you are depressed.
+You: It's true. I am unhappy.
+Eliza: Do you think coming here will help you not to be unhappy?
+You: I need some help, that much seems certain.
+Eliza: What would it mean to you if you got some help?
+You: Perhaps I could learn to get along with my mother.
+Eliza: Tell me more about your family.
+You: My mother takes care of me.
+Eliza: Who else in your family takes care of you?
+You: My father.
+Eliza: Your father?
+You: You are like my father in some ways.
+Eliza: What resemblance do you see?
+You: You are not very aggressive, but I think you don't want me to notice that.
+Eliza: What makes you think I am not very aggressive?
+You: You don't argue with me.
+Eliza: Why do you think I don't argue with you?
+You: You are afraid of me.
+Eliza: Does it please you to believe I am afraid of you?
+You: My father is afraid of everybody.
+Eliza: What else comes to mind when you think of your father?
+You: Bullies.
+Eliza: Does that have anything to do with the fact that your boyfriend made you come here?
+```
+
+## Exiting the program
+```bash
+# You can type bye, goodbye, done, quit or exit
+You: bye
+Eliza: Goodbye.
+```
+
+Or use CTRL+C, if you want to be rude about it...
 
 # Script structure
 
@@ -40,28 +104,41 @@ Each element in the JSON file follows this structure:
 
 ## Differences from original implementation
 
-- In the original implementation, the order of keywords is not necessarily sorted descending
-- In the original implementation, if a comma/period is encountered and a keyword has already been found,
-all subsequent text is deleted (p. 2). In this implementation, sentences are split based on punctuation (—,.:;-),
-and the sentence with the highest ranked keyword is chosen to be decomposed.
+- **Keyword ranking**:
+    - Original implementation: keywords are not guaranteed to be ranked in descending order;
+    as seen in Fig. 2 on p. 4 of the original paper, a keyword is placed on top of the keystack
+    if its rank is higher than the highest rank encountered in the sentence so far,
+    otherwise it is placed on the bottom of the keystack.
+    - This implementation: keywords are guaranteed to be ranked in descending order.
+- **Sentence tokenization**:
+    - Original implementation: if a comma/period is encountered and a keyword has already been found,
+    all subsequent text is deleted (p. 2). 
+    - This implementation: sentences are split based on punctuation (—,.:;-),
+    and the sentence with the highest ranked keyword is chosen to be decomposed.
     - Main reasons:
         - The emphasis of the user's input may not necessarily be in the first section of the sentence
         - The section with the highest ranked keyword has a higher chance of having decomposition rules
         for that keyword, as it has a rank in the first place
-- `DLIST` in the original implementation is called `tag` in this implementation. It works the same way.
-- In the original implementation, the keyword `my` is associated with the memory stack (p. 6);
-in this implementation, the memory stack is called when no matching decomposition rule is found.
+- **Tags**:
+    - Original implementation: `DLIST` is used to indicate tags.
+    - This implementation: `tag` is used to indicate tags.
+    - The functionality is the same.
+- **Memory stack**:
+    - Original implementation: the keyword `my` is associated with the memory stack (p. 6);
+    - This implementation: the memory stack is called when no matching decomposition rule is found.
 
-## Why JSON and not CSV?
-Each keyword has a **variable** amount of decomposition rules,
+## Why are scripts stored in JSON and not CSV?
+In the `doctor` script, each keyword has a **variable** amount of decomposition rules,
 and each decomposition rule has a **variable** amount of reassembly rules.
 I think JSON can store this information structure in a much more intuitive way.
 
+The `general` script could be stored in `.csv` as there is no nesting,
+but I preferred to use JSON again to remain consistent with the ohter script.
+
 # Future work
-- Allow the user to edit the script during a session by typing "edit"
-    - (see p. 7 of the paper)
-- Could include a randomized delay for each response, so that it feels more human-like
-- Could translate to Italian
+- Allow the user to edit the script during a session by typing "edit" as in the original implementation (p. 7 of the paper)
+- Translate to other languages (Italian, Spanish..)
+- Consider including a randomized delay before the program responds, to strengthen the illusion
 
 # References
 - J. Weizenbaum, “ELIZA-a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)

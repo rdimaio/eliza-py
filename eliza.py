@@ -217,4 +217,4 @@ while in_str not in exit_inputs:
     # Get next user input
     in_str = input(response)
 
-print("ELIZA: Goodbye.\n")
+print("Eliza: Goodbye.\n")
