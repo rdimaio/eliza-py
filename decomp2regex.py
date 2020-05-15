@@ -2,7 +2,14 @@
 
 import re
 
-def decomp_to_regex(in_str, general_script):
+def decomp_to_regex(in_str, tags):
+    """
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
     out_str = ''
 
     # The input is of the form: e.g. (0 YOU 0)
@@ -24,9 +31,9 @@ def decomp_to_regex(in_str, general_script):
             # Get tag name
             tag_name = w[1:].lower()
             w = ''
-            if tag_name in general_script['tags']:
+            if tag_name in tags:
                 # Make a regex separating each option with OR operator e.g. x|y|z
-                for synonym in general_script['tags'][tag_name]:
+                for synonym in tags[tag_name]:
                     w += synonym + '|'
                 w = w[:-1]
         else:

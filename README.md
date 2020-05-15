@@ -5,9 +5,7 @@ ELIZA uses pattern matching, decomposition and reassembly rules to emulate a Rog
 
 # Download
 ## Requirements
-- Python 2.x/3.x
-
-## From GitHub
+- Python 3.x (should work with Python 2 by adjusting back the syntax of some commands)
 
 ## Via command-line
 ```bash
@@ -16,6 +14,7 @@ $ git clone https://github.com/rdimaio/eliza-py
 ```
 
 # Usage
+## Starting the program
 ```bash
 # Go into the project folder
 $ cd eliza-py
@@ -23,7 +22,7 @@ $ cd eliza-py
 # Execute the file
 $ python eliza.py
 Eliza: Hi.
-[type]
+You: [type something]
 ```
 
 ## Example conversation (using the same inputs as the original paper, p. 1-2)
@@ -62,12 +61,10 @@ Eliza: Does that have anything to do with the fact that your boyfriend made you 
 
 ## Exiting the program
 ```bash
-# You can type bye, goodbye, done, quit or exit
+# You can type bye, goodbye, done, quit or exit. Or use CTRL+C, if you want to be rude about it...
 You: bye
 Eliza: Goodbye.
 ```
-
-Or use CTRL+C, if you want to be rude about it...
 
 # Script structure
 
@@ -76,7 +73,7 @@ This script handles general English language information that is not necessarily
 as well as useful inputs for the program.
 
 - `substitutions`: specifies which keywords should be substituted before applying a custom script
-- `tags`: specifies keywords that have
+- `tags`: specifies keywords within the same semantic field
 - `memory_inputs`: array of keywords that prompt the generation of an additional response added to the memory stack
 - `exit_inputs`: array of keywords that can be used to quit the program
 
@@ -133,12 +130,12 @@ and each decomposition rule has a **variable** amount of reassembly rules.
 I think JSON can store this information structure in a much more intuitive way.
 
 The `general` script could be stored in `.csv` as there is no nesting,
-but I preferred to use JSON again to remain consistent with the ohter script.
+but I preferred to use JSON again to remain consistent with the other script.
 
 # Future work
 - Allow the user to edit the script during a session by typing "edit" as in the original implementation (p. 7 of the paper)
 - Translate to other languages (Italian, Spanish..)
-- Consider including a randomized delay before the program responds, to strengthen the illusion
+- Consider including a randomized delay before the program responds, strengthening the human-like feel of the conversation
 
 # References
 - J. Weizenbaum, “ELIZA-a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)

@@ -9,39 +9,114 @@ SCRIPT_DIR = os.path.join(PROJECT_DIR, 'scripts')
 GENERAL_SCRIPT_PATH = os.path.join(SCRIPT_DIR, 'general.json')
 SCRIPT_PATH = os.path.join(SCRIPT_DIR, 'doctor.json')
 
+def setup():
+    """Set up the program, loading the JSON scripts.
+    
+    Returns
+    -------
+    general_script : dict
+        General script, containing information about language and tags.
+    script : dict[]
+        Custom script, containing keywords, ranks, decomposition and reassembly rules.
+    memory_inputs : str[]
+        Array of keywords that prompt the generation of an additional response added to the memory stack.
+    exit_inputs : str[]
+        array of keywords that can be used to quit the program
+
+    """
+    # Load scripts
+    general_script = load_script(GENERAL_SCRIPT_PATH)
+    script = load_script(SCRIPT_PATH)
+    
+    # Process decomposition rules in custom script
+    script = process_decomp_rules(script, general_script['tags'])
+    
+    # Get information needed for program execution
+    memory_inputs = general_script['memory_inputs']
+    exit_inputs = general_script['exit_inputs']
+
+    return general_script, script, memory_inputs, exit_inputs
+
 def load_script(script_path):
-    """Loads script from JSON file."""
-    # Load script
+    """Load script from a JSON file.
+    
+    Parameters
+    ----------
+    script_path : str
+        Path to JSON file.
+
+    Returns
+    -------
+    script : dict or dict[]
+        Loaded JSON object.
+
+    """
     with open(script_path) as f:
         script = json.load(f)
     return script
 
-def process_decomp_rules(script, general_script):
-    # Convert decomposition rules to regex notation
+def process_decomp_rules(script, tags):
+    """Processes decomposition rules in a script from Weizenbaum notation to regex.
+
+    Parameters
+    ----------
+    script : dict[]
+        JSON object containing decomposition rules in Weizenbaum notation.
+    tags : dict[]
+        Array of tags, where each tag is an array of words within the same semantic field.
+
+    Returns
+    -------
+    script : dict[]
+        JSON object containing decomposition rules in regex. 
+
+    """
+    # Cycle through each dict in the JSON script
     for d in script:
+        # Cycle through all the rules in each dict
         for rule in d['rules']:
-            rule['decomp'] = decomp_to_regex(rule['decomp'], general_script) 
+            # Convert decomposition rule from Weizenbaum notation to regex
+            rule['decomp'] = decomp_to_regex(rule['decomp'], tags) 
     return script
 
-def substitute(in_str, general_script):
+def substitute(in_str, substitutions):
+    """
+    Parameters
+    ----------
+    in_str : str
+        String to apply substitutions to.
+
+    substitutions : dict
+        Key-value pairs where the key must be substituted by its value.
+
+    Returns
+    -------
+    out_str : str
+        String with relevant substitutions applied.
+
+    """
     out_str = ''
     for word in in_str.split():
         word = word.lower()
-        if word in general_script['substitutions']:
-            out_str += general_script['substitutions'][word] + ' '
+        if word in substitutions:
+            out_str += substitutions[word] + ' '
         else:
             out_str += word + ' '
 
     return out_str
 
-def rank(in_str, script, general_script):
+def rank(sentences, script, substitutions):
     """Rank keywords according to script.
     Only considers sentence with highest ranked word.
-    Returns the actual sentence with hgihest ranked word,
-    and the descending sorted list of keywords for that sentence."""
+    Returns the actual sentence with highest ranked word,
+    and the descending sorted list of keywords for that sentence.
 
-    # Break down input into punctuation-delineated sentences
-    sentences = re.split(r'[.,!?](?!$)', in_str)
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
 
     all_keywords = []
     all_ranks = []
@@ -50,7 +125,7 @@ def rank(in_str, script, general_script):
     # Iterating using index so that sentences in the list can be modified directly
     for i in range(0, len(sentences)):
         sentences[i] = re.sub(r'[#$%&()*+,-./:;<=>?@[\]^_{|}~]', '', sentences[i])
-        sentences[i] = substitute(sentences[i], general_script)
+        sentences[i] = substitute(sentences[i], substitutions)
 
         # Check if sentence is not empty at this point
         if sentences[i]:
@@ -92,6 +167,12 @@ def decompose(keyword, in_str, script):
     along with the reassembly rule to use.
     If a matching decomposition rule is not found,
     it returns an empty list and an empty string.
+
+    Parameters
+    ----------
+
+    Returns
+    -------
     """
 
     comps = []
@@ -123,6 +204,11 @@ def decompose(keyword, in_str, script):
 def reassemble(components, reassembly_rule):
     """Reassemble a list of strings given a reassembly rule.
     Note: reassembly rules are 1-indexed, according to the original paper.
+    Parameters
+    ----------
+
+    Returns
+    -------
     """
 
     response = 'Eliza: '
@@ -143,11 +229,25 @@ def reassemble(components, reassembly_rule):
     return response
 
 def prepare_response(response):
+    """
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
     response = clean_string(response)
     response += "\nYou: "
     return response
 
 def clean_string(in_str):
+    """
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
     # Remove extra whitespaces
     in_str = ' '.join(in_str.split())
     # Remove whitespaces before punctuation
@@ -157,16 +257,12 @@ def clean_string(in_str):
 
 memory_stack = []
 
-# Load scripts
-general_script = load_script(GENERAL_SCRIPT_PATH)
-exit_inputs = general_script['exit_inputs']
-memory_inputs = general_script['memory_inputs']
-script = load_script(SCRIPT_PATH)
-script = process_decomp_rules(script, general_script)
+general_script, script, memory_inputs, exit_inputs = setup()
 
 # Get first user input
 in_str = input("Eliza: Welcome.\nYou: ")
 
+# Main execution loop
 while in_str not in exit_inputs:
 
     # str.upper().isupper() is a fast way of checking
@@ -184,8 +280,11 @@ while in_str not in exit_inputs:
         in_str = input('Eliza: Reset complete.\nYou:')
         continue
 
+    # Break down input into punctuation-delineated sentences
+    sentences = re.split(r'[.,!?](?!$)', in_str)
+
     # Get sentence in input with highest ranked word and sort keywords by rank
-    sentence, sorted_keywords = rank(in_str, script, general_script)
+    sentence, sorted_keywords = rank(sentences, script, general_script['substitutions'])
 
     # Find a matching decomposition rule
     for keyword in sorted_keywords:
