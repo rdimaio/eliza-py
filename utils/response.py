@@ -36,15 +36,15 @@ def generate_response(in_str, script, substitutions, memory_stack, memory_inputs
         comps, reassembly_rule = decompose(keyword, sentence, script)
         # Break if matching decomposition rule has been found
         if comps:
+            response = reassemble(comps, reassembly_rule)
             # For certain keywords, generate an additional response to push onto memory stack
             if keyword in memory_inputs:
                 generate_memory_response(sentence, script, memory_stack)
-            response = reassemble(comps, reassembly_rule)
             break
     # If no matching decomposition rule has been found
     else:
         # If memory stack is not empty,
-        # assemble an answer relevant to past input
+        # pop answer from memory stack
         if memory_stack:
             response = memory_stack.pop()
         # Otherwise, respond with a generic answer

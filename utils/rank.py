@@ -23,7 +23,6 @@ def rank(sentences, script, substitutions):
         Words in `sentences[max_index]` sorted in descending order based on their rank.
 
     """
-
     all_keywords = []
     all_ranks = []
     maximums = []
@@ -76,8 +75,8 @@ def get_ranks(keywords, script):
         Array of integers in the same order as their respective keywords
     
     """
-
     ranks = []
+
     # Populate list of ranks
     for keyword in keywords:
         for d in script:
@@ -107,6 +106,7 @@ def substitute(in_str, substitutions):
 
     """
     out_str = ''
+
     # Cycle through all words in string
     for word in in_str.split():
         # If substitutions specifies a substitution for this word, substitute it

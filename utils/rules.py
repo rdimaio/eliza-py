@@ -36,9 +36,7 @@ def decompose(keyword, in_str, script):
                 if m:
                     # Decompose string according to decomposition rule
                     comps = list(m.groups())
-                    # Get reassembly rule
-                    reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
-                    update_last_used_reassembly_rule(rule)
+                    reassembly_rule = get_reassembly_rule(rule)
                     break
             break
 
@@ -82,56 +80,6 @@ def reassemble(components, reassembly_rule):
 
     return response
 
-def decomp_to_regex(in_str, tags):
-    """Convert decomposition rules from Weizenbaum notation to regex.
-
-    Parameters
-    ----------
-    in_str : str
-        Decomposition rule in Weizenbaum notation to convert to regex.
-    tags : dict
-        Tags to consider when converting to regex.
-
-    Returns
-    -------
-    out_str : str
-        Decomposition rule converted to regex form.
-        
-    """
-    out_str = ''
-
-    # The input is of the form: e.g. (0 YOU 0)
-    # Strip parenthesis
-    in_str = re.sub('[()]', '', in_str)
-
-    # Split string into space separated list
-    in_str = in_str.split()
-
-    for w in in_str:
-        # 0 means "an indefinite number of words"
-        if w == '0': 
-            w = '.*'
-        # A positive non-zero integer means "this specific amount of words"
-        elif w.isnumeric() and int(w) > 0:
-            w = r'(?:\b\w+\b[\s\r\n]*){' + w + '}'
-        # A word starting with @ signifies a tag
-        elif w[0] == "@":
-            # Get tag name
-            tag_name = w[1:].lower()
-            w = ''
-            if tag_name in tags:
-                # Make a regex separating each option with OR operator (e.g. x|y|z)
-                w = r'\b(' + '|'.join(tags[tag_name]) + r')\b'
-        else:
-            # Add word boundaries to match on a whole word basis
-            w = r'\b' + w + r'\b'
-        
-        # Parentheses are needed to properly divide sentence into components
-        # \s* matches zero or more whitespace characters 
-        out_str += '(' + w + r')\s*' 
-
-    return out_str
-
 def process_decomp_rules(script, tags):
     """Processes decomposition rules in a script from Weizenbaum notation to regex.
 
@@ -156,6 +104,90 @@ def process_decomp_rules(script, tags):
             rule['decomp'] = decomp_to_regex(rule['decomp'], tags) 
     return script
 
+def preprocess_decomp_rule(in_str):
+    """Preprocess a decomposition rule before converting to regex.
+
+    Parameters
+    ----------
+    in_str : str
+        String representing a decomposition rule.
+
+    Returns
+    -------
+    in_str: str[]
+        List of components in decomposition rule.
+    """
+    # The input is of the form: e.g. (0 YOU 0)
+    # Strip parenthesis
+    in_str = re.sub('[()]', '', in_str)
+
+    # Split string into space separated list
+    return in_str.split()
+
+
+def decomp_to_regex(in_str, tags):
+    """Convert decomposition rules from Weizenbaum notation to regex.
+    An example of Weizenbaum notation is: (0 KEYWORD1 0 KEYWORD2 0).
+
+    Parameters
+    ----------
+    in_str : str
+        Decomposition rule in Weizenbaum notation to convert to regex.
+    tags : dict
+        Tags to consider when converting to regex.
+
+    Returns
+    -------
+    out_str : str
+        Decomposition rule converted to regex form.
+        
+    """
+    out_str = ''
+
+    in_str = preprocess_decomp_rule(in_str)
+
+    for w in in_str:
+        # 0 means "an indefinite number of words"
+        if w == '0': 
+            w = '.*'
+        # A positive non-zero integer means "this specific amount of words"
+        elif w.isnumeric() and int(w) > 0:
+            w = r'(?:\b\w+\b[\s\r\n]*){' + w + '}'
+        # A word starting with @ signifies a tag
+        elif w[0] == "@":
+            # Get tag name
+            tag_name = w[1:].lower()
+            w = tag_to_regex(tag_name, tags)
+        else:
+            # Add word boundaries to match on a whole word basis
+            w = r'\b' + w + r'\b'
+        
+        # Parentheses are needed to properly divide sentence into components
+        # \s* matches zero or more whitespace characters 
+        out_str += '(' + w + r')\s*' 
+
+    return out_str
+
+def tag_to_regex(tag_name, tags):
+    """Convert a decomposition rule tag into regex notation.
+    
+    Parameters
+    ----------
+    tag_name : str
+        Tag to convert to regex notation.
+    tags : dict
+        Tags to consider when converting to regex.
+
+    Returns
+    -------
+    w : str
+        Tag converted to regex notation. Empty if `tag_name` is not in `tags`.
+    """
+    w = ''
+    if tag_name in tags:
+        # Make a regex separating each option with OR operator (e.g. x|y|z)
+        w = r'\b(' + '|'.join(tags[tag_name]) + r')\b'
+    return w
 
 def update_last_used_reassembly_rule(rule):
     """Update the `last_used_reassembly_rule` ID for a given decomposition `rule`.
@@ -192,3 +224,21 @@ def reset_all_last_used_reassembly_rule(script):
     for d in script:
         for rule in d['rules']:
             rule['last_used_reassembly_rule'] = 0
+
+def get_reassembly_rule(rule):
+    """Return reassembly rule for a given decomposition rule.
+
+    Parameters
+    ----------
+    rule : dict
+        Rule containing a decomposition rule, 
+        one or more reassembly rules and a `last_used_reassembly_rule` counter.
+
+    Returns
+    -------
+    reassembly_rule : str
+        Reassembly rule used to assemble a response for the user.
+    """   
+    reassembly_rule = rule['reassembly'][rule['last_used_reassembly_rule']]
+    update_last_used_reassembly_rule(rule)
+    return reassembly_rule
