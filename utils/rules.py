@@ -147,26 +147,45 @@ def decomp_to_regex(in_str, tags):
     in_str = preprocess_decomp_rule(in_str)
 
     for w in in_str:
-        # 0 means "an indefinite number of words"
-        if w == '0': 
-            w = '.*'
-        # A positive non-zero integer means "this specific amount of words"
-        elif w.isnumeric() and int(w) > 0:
-            w = r'(?:\b\w+\b[\s\r\n]*){' + w + '}'
-        # A word starting with @ signifies a tag
-        elif w[0] == "@":
-            # Get tag name
-            tag_name = w[1:].lower()
-            w = tag_to_regex(tag_name, tags)
-        else:
-            # Add word boundaries to match on a whole word basis
-            w = r'\b' + w + r'\b'
-        
+        w = regexify(w, tags)
         # Parentheses are needed to properly divide sentence into components
         # \s* matches zero or more whitespace characters 
         out_str += '(' + w + r')\s*' 
 
     return out_str
+
+def regexify(w, tags):
+    """Convert a single component of a decomposition rule
+    from Weizenbaum notation to regex.
+
+    Parameters
+    ----------
+    w : str
+        Component of a decomposition rule.
+    tags : dict
+        Tags to consider when converting to regex.
+
+    Returns
+    -------
+    w : str
+        Component of a decomposition rule converted to regex form.
+    
+    """
+    # 0 means "an indefinite number of words"
+    if w == '0': 
+        w = '.*'
+    # A positive non-zero integer means "this specific amount of words"
+    elif w.isnumeric() and int(w) > 0:
+        w = r'(?:\b\w+\b[\s\r\n]*){' + w + '}'
+    # A word starting with @ signifies a tag
+    elif w[0] == "@":
+        # Get tag name
+        tag_name = w[1:].lower()
+        w = tag_to_regex(tag_name, tags)
+    else:
+        # Add word boundaries to match on a whole word basis
+        w = r'\b' + w + r'\b'
+    return w
 
 def tag_to_regex(tag_name, tags):
     """Convert a decomposition rule tag into regex notation.
