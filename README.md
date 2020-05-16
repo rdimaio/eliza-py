@@ -6,7 +6,7 @@ You can read the 1966 paper [here](https://dl.acm.org/doi/10.1145/365153.365168)
 ELIZA uses pattern matching, decomposition and reassembly rules 
 to emulate a Rogerian psychotherapist.
 
-![Demo](/demo.svg)
+![Demo](./b.svg)
 
 # Download
 ## Requirements
