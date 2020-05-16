@@ -16,18 +16,19 @@ def main():
 
     # Get first user input
     in_str = input("Eliza: Welcome.\nYou: ")
+    in_str_l = in_str.lower()
 
     # Main execution loop
-    while in_str not in exit_inputs:
+    while in_str_l not in exit_inputs:
 
-        # str.upper().isupper() is a fast way of checking
+        # str.lower().islower() is a fast way of checking
         # if a string contains any characters of the alphabet.
         # Source: https://stackoverflow.com/a/59301031
-        if not in_str.upper().isupper():
+        if not in_str_l.islower():
             in_str = input('Eliza: Please, use letters. I am human, after all.\nYou:')
             continue
 
-        if in_str.lower() == 'reset':
+        if in_str_l == 'reset':
             reset_all_last_used_reassembly_rule(script)
             in_str = input('Eliza: Reset complete.\nYou:')
             continue
@@ -36,6 +37,7 @@ def main():
 
         # Get next user input
         in_str = input(response)
+        in_str_l = in_str.lower()
 
     print("Eliza: Goodbye.\n")
 

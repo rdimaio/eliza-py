@@ -120,13 +120,8 @@ def decomp_to_regex(in_str, tags):
             tag_name = w[1:].lower()
             w = ''
             if tag_name in tags:
-                # Make a regex separating each option with OR operator e.g. x|y|z
-                for synonym in tags[tag_name]:
-                    w += synonym + '|'
-                # Remove last |
-                w = w[:-1]
-                # Add word boundaries
-                w = r'\b(' + w + r')\b'
+                # Make a regex separating each option with OR operator (e.g. x|y|z)
+                w = r'\b(' + '|'.join(tags[tag_name]) + r')\b'
         else:
             # Add word boundaries to match on a whole word basis
             w = r'\b' + w + r'\b'

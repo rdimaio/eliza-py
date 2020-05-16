@@ -24,6 +24,8 @@
         "when": "what",
         "certainly": "yes",
         "yeah": "yes",
+        "yea": "yes",
+        "ye": "yes",
         "hello": "hi",
         "hey": "hi",
         "greetings": "hi",
@@ -117,6 +119,11 @@
         "goodbye",
         "done",
         "quit",
-        "exit"
+        "exit",
+        "bye.",
+        "goodbye.",
+        "done.",
+        "quit.",
+        "exit."
     ]
 }

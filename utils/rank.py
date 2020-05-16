@@ -46,7 +46,7 @@ def rank(sentences, script, substitutions):
             # Append maximum rank in this sentence
             maximums.append(max(ranks))
 
-        all_ranks.append(ranks)
+            all_ranks.append(ranks)
         
     # Return earliest sentence with highest keyword rank
     max_rank = max(maximums)
@@ -109,10 +109,9 @@ def substitute(in_str, substitutions):
     out_str = ''
     # Cycle through all words in string
     for word in in_str.split():
-        word = word.lower()
         # If substitutions specifies a substitution for this word, substitute it
-        if word in substitutions:
-            out_str += substitutions[word] + ' '
+        if word.lower() in substitutions:
+            out_str += substitutions[word.lower()] + ' '
         # Otherwise carry over the same word
         else:
             out_str += word + ' '
