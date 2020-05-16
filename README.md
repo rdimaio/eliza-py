@@ -70,6 +70,10 @@ You: bye
 Eliza: Goodbye.
 ```
 
+# Program flow
+
+![Flowchart](./flowchart.svg)
+
 # Script structure
 
 ## `scripts/general.json`
@@ -149,3 +153,8 @@ but I preferred to use JSON again to remain consistent with the other script.
 - J. Weizenbaum, “ELIZA-a computer program for the study of natural language communication between man and machine,” Communications of the ACM, vol. 9, no. 1, pp. 36–45, Jan. 1966. [Link](https://dl.acm.org/doi/10.1145/365153.365168)
 
 - The script file from [Charles Hayen's Java implementation of ELIZA](http://chayden.net/eliza/Eliza.html)
+
+## Tools
+
+- **Demo animation**: [asciinema](https://github.com/asciinema/asciinema) and [termtosvg](https://github.com/nbedos/termtosvg)
+- **Flowchart**: [draw.io](draw.io)
