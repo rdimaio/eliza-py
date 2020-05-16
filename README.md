@@ -9,6 +9,10 @@ to emulate a Rogerian psychotherapist.
 ![Demo](./demo.svg)
 (Inputs taken from [Weizenbaum's 1966 paper, pp.1-2.](https://dl.acm.org/doi/10.1145/365153.365168))
 
+# Program flow
+
+![Flowchart](./flowchart.svg)
+
 # Download
 ## Requirements
 - Python 3.x 
@@ -72,10 +76,6 @@ Eliza: Does that have anything to do with the fact that your boyfriend made you 
 You: bye
 Eliza: Goodbye.
 ```
-
-# Program flow
-
-![Flowchart](./flowchart.svg)
 
 # Script structure
 
