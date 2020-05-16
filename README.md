@@ -52,22 +52,6 @@ You: I need some help, that much seems certain.
 Eliza: What would it mean to you if you got some help?
 You: Perhaps I could learn to get along with my mother.
 Eliza: Tell me more about your family.
-You: My mother takes care of me.
-Eliza: Who else in your family takes care of you?
-You: My father.
-Eliza: Your father?
-You: You are like my father in some ways.
-Eliza: What resemblance do you see?
-You: You are not very aggressive, but I think you don't want me to notice that.
-Eliza: What makes you think I am not very aggressive?
-You: You don't argue with me.
-Eliza: Why do you think I don't argue with you?
-You: You are afraid of me.
-Eliza: Does it please you to believe I am afraid of you?
-You: My father is afraid of everybody.
-Eliza: What else comes to mind when you think of your father?
-You: Bullies.
-Eliza: Does that have anything to do with the fact that your boyfriend made you come here?
 ```
 
 ## Exiting the program
